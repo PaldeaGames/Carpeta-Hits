@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Carpeta Hits — Paldea Games</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0d0d1a;--surf:#141428;--surf2:#1c1c38;--brd:rgba(255,255,255,0.08);--brd2:rgba(255,255,255,0.15);--acc:#7c5cbf;--gold:#e8c84a;--tx:#e8e6f0;--txm:#8885a8;--red:#ff4d4d;--accent:#e8ff47;--accent-dim:rgba(232,255,71,0.12);--accent-text:#0d0d0f;--green:#47ffb2;--radius:10px;--radius-sm:7px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--tx);font-family:'DM Sans',sans-serif;font-size:15px}
+#fixed-top{position:fixed;top:0;left:0;right:0;z-index:150;background:var(--bg)}
+header{background:linear-gradient(135deg,#0d0d1a,#1a0d2e);border-bottom:2px solid var(--acc);padding:14px 20px;display:flex;align-items:center;gap:14px;justify-content:space-between}
+.head-left{display:flex;align-items:center;gap:14px}
+.brand-icon{width:38px;height:38px;background:linear-gradient(135deg,var(--acc),#4a3a7a);border-radius:11px;flex-shrink:0;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 10px rgba(124,92,191,.4)}
+.brand-icon svg{width:21px;height:21px}
+header h1{font-family:'Syne',sans-serif;font-size:1.2rem;font-weight:800}
+header p{font-size:.75rem;color:var(--txm);margin-top:1px}
+.head-cart-btn{background:var(--accent);color:var(--accent-text);border:none;border-radius:50px;padding:10px 16px 10px 14px;font-family:'Syne',sans-serif;font-size:.85rem;font-weight:800;cursor:pointer;display:flex;align-items:center;gap:8px;box-shadow:0 2px 12px rgba(232,255,71,.3);transition:all .2s;flex-shrink:0;position:relative}
+.head-cart-btn:hover{transform:translateY(-1px);box-shadow:0 4px 18px rgba(232,255,71,.45)}
+.head-cart-btn svg{width:19px;height:19px;flex-shrink:0}
+.head-cart-btn .cart-count{position:absolute;top:-7px;right:-7px;background:var(--red);color:#fff;border-radius:999px;min-width:20px;height:20px;padding:0 5px;display:flex;align-items:center;justify-content:center;font-size:.68rem;font-weight:800;border:2px solid var(--bg);line-height:1}
+.head-cart-btn .cart-count.zero{display:none}
+@media(max-width:480px){header{padding:12px 14px;gap:8px}header h1{font-size:.95rem}header p{display:none}.head-left{gap:8px}.brand-icon{width:30px;height:30px}.head-cart-btn{padding:8px 12px 8px 10px;font-size:.74rem}.head-cart-btn svg{width:16px;height:16px}}
+.sync-bar{font-size:.72rem;color:var(--txm);padding:5px 20px;text-align:right;background:var(--surf);border-bottom:1px solid var(--brd);display:none}
+.sync-bar.show{display:block}
+.bar-sticky{background:var(--bg);padding:10px 20px 8px;border-bottom:1px solid var(--brd);box-shadow:0 8px 14px -10px rgba(0,0,0,.6)}
+@media(max-width:480px){.bar-sticky{padding:8px 14px 6px}}
+.bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.bar-search-row{margin-bottom:8px}
+.bar-filters-row{margin-bottom:0}
+.search-wrap{position:relative;flex:1;min-width:130px;display:flex}
+.search-wrap input{width:100%;padding-right:30px}
+.search-clear{position:absolute;right:4px;top:50%;transform:translateY(-50%);background:var(--surf2);border:none;color:var(--txm);width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;line-height:1;padding:0}
+.search-clear:hover{background:var(--acc);color:#fff}
+.bar input,.bar select{background:var(--surf2);border:1px solid var(--brd2);color:var(--tx);padding:6px 10px;border-radius:6px;font-size:16px;outline:none;font-family:'DM Sans',sans-serif}
+.bar input:focus,.bar select:focus{border-color:var(--acc)}
+.bar input{flex:1;min-width:130px}
+.il-select{background:var(--surf2);border:1px solid var(--brd2);color:var(--tx);padding:6px 10px;border-radius:6px;font-size:.78rem;outline:none;font-family:'DM Sans',sans-serif;font-weight:600;cursor:pointer;max-width:160px}
+.il-select:focus{border-color:var(--acc)}
+@media(max-width:600px){.il-select{max-width:120px;font-size:.72rem;padding:6px 8px}}
+.vb{background:var(--surf2);border:1px solid var(--brd2);color:var(--txm);padding:5px 10px;border-radius:6px;cursor:pointer;font-size:.78rem;transition:all .2s;font-family:'DM Sans',sans-serif}
+.vb.on,.vb:hover{background:var(--acc);color:#fff;border-color:var(--acc)}
+.view-toggle{display:flex;align-items:center;gap:6px;margin-left:auto}
+.view-toggle-label{font-size:.7rem;color:var(--txm);font-weight:600}
+.vb-icon{background:var(--surf2);border:1px solid var(--brd2);color:var(--txm);width:30px;height:30px;border-radius:6px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.vb-icon svg{width:16px;height:16px}
+.vb-icon.on,.vb-icon:hover{background:var(--acc);color:#fff;border-color:var(--acc)}
+@media(max-width:600px){.view-toggle-label{display:none}.bar-filters-row{flex-wrap:wrap}}
+.tab{display:none;padding:14px 20px 100px}
+@media(max-width:480px){.tab{padding:10px 14px 100px}}
+.tab.on{display:block}
+.nores{text-align:center;padding:30px;color:var(--txm)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px}
+@media(max-width:600px){.grid{grid-template-columns:repeat(2,1fr);gap:8px}}
+.ci{background:var(--surf2);border:1px solid var(--brd);border-radius:var(--radius);overflow:hidden;position:relative;transition:transform .15s}
+.ci:hover{transform:translateY(-2px)}
+.ci.agotado{opacity:.38;filter:grayscale(.7)}
+.imgw{background:#050510;display:flex;align-items:center;justify-content:center;min-height:125px;overflow:hidden;position:relative}
+.agotado-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(20,10,10,.88);border:1px solid rgba(255,80,80,.5);color:#ff8080;font-family:'Syne',sans-serif;font-size:.78rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:7px 16px;border-radius:20px;z-index:3;pointer-events:none}
+.imgw img{width:100%;height:auto;display:block}
+.ph{color:var(--txm);font-size:.71rem;text-align:center;padding:10px;line-height:1.5}
+.vbdg{position:absolute;top:5px;right:5px;padding:2px 6px;border-radius:8px;font-size:.65rem;font-weight:700;z-index:2;pointer-events:none}
+.rar-nrml{background:#1c1c38;border:1px solid #3a3a60;color:#aaa8d0}
+.rar-holo{background:#1a1230;border:1px solid #6040a0;color:#c0a0ff}
+.rar-revh{background:#3a1505;border:1px solid #7a3a18;color:#ff8c5a}
+.rar-pkbl{background:#200a0a;border:1px solid #802020;color:#ff6060}
+.rar-promo{background:#0a1a10;border:1px solid #1a4a28;color:#60e890}
+.rar-ex{background:#0a1a08;border:1px solid #285020;color:#70e060}
+.rar-dr{background:#1a1a08;border:1px solid #4a4a18;color:#c8c838}
+.rar-ur{background:#0a0a20;border:1px solid #202080;color:#7070ff}
+.rar-v{background:#0a0a18;border:1px solid #383870;color:#8888d0}
+.rar-vmax{background:#100820;border:1px solid #502080;color:#b060e0}
+.rar-vstar{background:#0a1020;border:1px solid #204070;color:#60a0e0}
+.rar-ill{background:#1a0a1a;border:1px solid #702070;color:#e070e0}
+.rar-sir{background:#1a1005;border:1px solid #806020;color:#ffd060}
+.rar-hrsr{background:#181008;border:1px solid #604820;color:#e0b060}
+.rar-shr{background:#080818;border:1px solid #303060;color:#9090c0}
+.rar-shur{background:#080810;border:1px solid #282850;color:#8080b0}
+.rar-radr{background:#100808;border:1px solid #501818;color:#e05050}
+.rar-amzr{background:#0a0a18;border:1px solid #282870;color:#7878d0}
+.rar-break{background:#180808;border:1px solid #602020;color:#e07070}
+.rar-mstbl{background:#080a18;border:1px solid #202060;color:#6060b0}
+.rar-ace{background:#050a1a;border:1px solid #204060;color:#40a0e0}
+.rar-liga{background:#0a1510;border:1px solid #205030;color:#50c870}
+.rar-default{background:#1c1c38;border:1px solid #3a3a60;color:#aaa8d0}
+.info{padding:8px 9px 10px}
+.pn{font-weight:700;font-size:.85rem;margin-bottom:2px}
+.sn{font-size:.71rem;color:var(--txm);margin:1px 0}
+.cn{font-family:monospace;font-size:.71rem;color:var(--gold);margin-bottom:6px}
+.lang-row{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:6px}
+.lang-btn{font-size:.74rem;padding:4px 12px;border-radius:14px;cursor:pointer;border:1px solid var(--brd2);background:transparent;color:var(--txm);font-family:'DM Sans',sans-serif;transition:all .15s;font-weight:600}
+.lang-btn.active{border-color:var(--accent);background:var(--accent-dim);color:var(--accent)}
+.lang-btn.agotado-lang{opacity:.35;text-decoration:line-through;cursor:not-allowed}
+.precio-row{display:flex;align-items:center;justify-content:space-between;margin-top:4px}
+.precio-val{font-size:.9rem;font-weight:700;color:var(--accent);font-family:'Syne',sans-serif}
+.stk-disp{font-size:.64rem;color:var(--txm);margin-top:2px}
+.qty-wrap{display:flex;align-items:center;gap:5px}
+.qty-btn{width:22px;height:22px;border-radius:50%;border:1px solid var(--brd2);background:var(--surf);color:var(--tx);font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;transition:all .15s;flex-shrink:0}
+.qty-btn:hover{border-color:var(--accent);color:var(--accent)}
+.qty-btn:disabled{opacity:.3;cursor:not-allowed}
+.qty-num{font-size:13px;font-weight:700;min-width:18px;text-align:center;color:var(--tx)}
+.tbl-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tbl{width:100%;border-collapse:collapse;font-size:.83rem}
+.tbl th{text-align:left;color:var(--txm);font-weight:600;padding:7px 10px;border-bottom:2px solid var(--brd2);font-size:.75rem;text-transform:uppercase;letter-spacing:.04em;background:var(--surf)}
+.tbl td{padding:7px 10px;border-bottom:1px solid var(--brd);vertical-align:middle}
+.tbl tr:hover td{background:rgba(255,255,255,.03)}
+.tbl tr.agotado-row td{opacity:.4}
+.tbl .lang-btn{font-size:.68rem;padding:2px 7px}
+.tbl .qty-btn{width:20px;height:20px;font-size:12px}
+@media(max-width:700px){.tbl{font-size:.74rem}.tbl th,.tbl td{padding:6px 7px}.tbl th:nth-child(1),.tbl td:nth-child(1),.tbl th:nth-child(2),.tbl td:nth-child(2){position:sticky;left:0;background:var(--bg);z-index:1}.tbl th:nth-child(2),.tbl td:nth-child(2){left:58px;box-shadow:4px 0 6px -4px rgba(0,0,0,.5);max-width:110px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}}
+#carrito-panel{position:fixed;inset:0;z-index:200;display:none}
+#carrito-panel.show{display:flex}
+.cart-overlay{position:absolute;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(2px)}
+.cart-drawer{position:absolute;right:0;top:0;bottom:0;width:min(440px,100vw);background:linear-gradient(180deg,#15142b,#0f0e1f);border-left:1px solid rgba(255,255,255,.08);display:flex;flex-direction:column;overflow:hidden;box-shadow:-12px 0 40px rgba(0,0,0,.5)}
+.cart-head{padding:18px 22px;border-bottom:1px solid rgba(255,255,255,.07);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;background:rgba(124,92,191,.06)}
+.cart-head h2{font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:800}
+.cart-close{background:none;border:1px solid var(--brd2);color:var(--txm);font-size:1.1rem;cursor:pointer;padding:4px 10px;border-radius:7px;line-height:1.3}
+.cart-close:hover{color:var(--tx);background:var(--surf2)}
+.cart-items{flex:1;overflow-y:auto;padding:14px 18px}
+.cart-item{background:var(--surf2);border:1px solid var(--brd);border-radius:10px;padding:12px 14px;margin-bottom:10px;display:flex;align-items:center;gap:12px;transition:border-color .15s}
+.cart-item:hover{border-color:var(--brd2)}
+.cart-item img{width:46px;border-radius:6px;flex-shrink:0;box-shadow:0 2px 8px rgba(0,0,0,.3)}
+.cart-item-info{flex:1;min-width:0}
+.cart-item-name{font-size:.85rem;font-weight:700;margin-bottom:2px;font-family:'Syne',sans-serif}
+.cart-item-meta{font-size:.68rem;color:var(--txm);letter-spacing:.02em}
+.cart-item-price{font-size:.86rem;font-weight:700;color:var(--gold);white-space:nowrap}
+.cart-remove{background:none;border:none;color:var(--txm);cursor:pointer;font-size:1rem;padding:3px 7px;border-radius:5px;flex-shrink:0;transition:all .15s}
+.cart-remove:hover{color:var(--red);background:rgba(255,77,77,.1)}
+.cart-footer{padding:18px 22px;border-top:1px solid rgba(255,255,255,.07);flex-shrink:0;background:rgba(0,0,0,.15)}
+.cart-total{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px}
+.cart-total-label{font-size:.8rem;color:var(--txm);text-transform:uppercase;letter-spacing:.06em;font-weight:600}
+.cart-total-val{font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:800;color:var(--gold)}
+.cart-ig-btn{display:block;width:100%;padding:14px;background:linear-gradient(135deg,var(--acc),#5c3fa0);border:1px solid rgba(255,255,255,.12);border-radius:10px;color:#fff;font-family:'Syne',sans-serif;font-size:.92rem;font-weight:800;cursor:pointer;text-align:center;letter-spacing:.02em;transition:transform .15s,box-shadow .15s;box-shadow:0 4px 16px rgba(124,92,191,.35)}
+.cart-ig-btn:hover{transform:translateY(-1px);box-shadow:0 6px 22px rgba(124,92,191,.5)}
+.cart-note{font-size:.72rem;color:var(--txm);text-align:center;margin-top:10px;line-height:1.5}
+.cart-empty{text-align:center;padding:40px 20px;color:var(--txm);font-size:.9rem}
+.field{margin-bottom:14px}
+.field label{display:block;font-size:.78rem;color:var(--txm);margin-bottom:5px;font-weight:600}
+.field .req{color:var(--red);margin-left:2px}
+.field input,.field select{width:100%;background:var(--surf2);border:1px solid var(--brd2);color:var(--tx);padding:10px 12px;border-radius:var(--radius-sm);font-size:16px;outline:none;font-family:'DM Sans',sans-serif}
+.field input:focus,.field select:focus{border-color:var(--acc)}
+.field-error{font-size:.72rem;color:var(--red);margin-top:5px;display:none}
+.field-error.show{display:block}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ig-wrap,.cel-wrap{display:flex;align-items:center;background:var(--surf2);border:1px solid var(--brd2);border-radius:var(--radius-sm);overflow:hidden}
+.ig-wrap:focus-within,.cel-wrap:focus-within{border-color:var(--acc)}
+.ig-prefix,.cel-prefix{padding:10px 12px;color:var(--txm);font-size:.88rem;background:var(--surf);border-right:1px solid var(--brd2);white-space:nowrap;flex-shrink:0}
+.ig-wrap input,.cel-wrap input{border:none;background:transparent;flex:1;padding:10px 12px;color:var(--tx);font-size:16px;outline:none;font-family:'DM Sans',sans-serif}
+.toggle-group{display:flex;gap:8px;margin-bottom:6px}
+.toggle-btn{flex:1;padding:11px;background:var(--surf2);border:1px solid var(--brd2);border-radius:var(--radius-sm);color:var(--txm);font-family:'DM Sans',sans-serif;font-size:.85rem;font-weight:600;cursor:pointer;transition:all .2s;text-align:center}
+.toggle-btn.active-retiro{background:rgba(71,255,178,.1);border-color:var(--green);color:var(--green)}
+.toggle-btn.active-envio{background:rgba(124,92,191,.15);border-color:var(--acc);color:#b89cf0}
+.section-retiro,.section-envio{display:none}
+.section-retiro.show,.section-envio.show{display:block}
+.retiro-info{background:rgba(71,255,178,.07);border:1px solid rgba(71,255,178,.2);border-radius:var(--radius-sm);padding:12px 14px;margin-top:12px;font-size:.78rem;color:var(--txm);line-height:1.6}
+.retiro-info strong{color:var(--green)}
+.retiro-link{display:inline-flex;align-items:center;gap:4px;color:var(--green);font-size:.78rem;text-decoration:none;margin-top:6px;font-weight:600}
+.retiro-link:hover{text-decoration:underline}
+.addr-tabs{display:flex;gap:6px;background:var(--surf);border-radius:8px;padding:3px;margin-bottom:12px}
+.addr-tab{flex:1;padding:7px;text-align:center;font-size:.78rem;border-radius:6px;cursor:pointer;border:1px solid transparent;background:none;color:var(--txm);font-weight:600;font-family:'DM Sans',sans-serif}
+.addr-tab.active{background:rgba(232,200,74,.14);border:1px solid var(--gold);color:var(--gold)}
+.sec-domicilio,.sec-sucursal{display:none}
+.sec-domicilio.show,.sec-sucursal.show{display:block}
+.checkout-divider{border-top:1px solid var(--brd);margin:16px 0 14px}
+.checkout-title{font-family:'Syne',sans-serif;font-size:.9rem;font-weight:700;color:var(--gold);margin-bottom:10px}
+.checkout-back{background:none;border:1px solid var(--brd2);color:var(--txm);padding:9px 14px;border-radius:var(--radius-sm);cursor:pointer;font-size:.82rem;font-family:'DM Sans',sans-serif}
+.checkout-back:hover{color:var(--tx)}
+.checkout-submit{flex:1;padding:13px;background:var(--accent);color:var(--accent-text);border:none;border-radius:var(--radius-sm);font-family:'Syne',sans-serif;font-size:.92rem;font-weight:800;cursor:pointer}
+.checkout-submit:disabled{opacity:.5;cursor:not-allowed}
+.checkout-row-btns{display:flex;gap:8px;margin-top:16px}
+.success-box{text-align:center;padding:40px 20px}
+.success-box .ok-icon{font-size:2.4rem;margin-bottom:10px}
+.success-box h3{font-family:'Syne',sans-serif;color:var(--accent);font-size:1.05rem;margin-bottom:8px}
+.success-box p{font-size:.85rem;color:var(--txm);line-height:1.6}
+</style>
+</head>
+<body>
+<div id="fixed-top">
+  <header>
+    <div class="head-left">
+      <div class="brand-icon">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#e8c84a"/></svg>
+      </div>
+      <div>
+        <h1>Carpeta Hits</h1>
+        <p>Cartas especiales · Elige idioma y agrega al carrito</p>
+      </div>
+    </div>
+    <button class="head-cart-btn" onclick="abrirCarrito()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+      Carrito <span class="cart-count zero" id="cart-count">0</span>
+    </button>
+  </header>
+  <div class="sync-bar" id="syncBar">Cargando inventario...</div>
+  <div class="bar-sticky" id="filtros-bar"></div>
+</div>
+
+<div class="tab on" id="tab-main"></div>
+
+<div id="carrito-panel">
+  <div class="cart-overlay" onclick="cerrarCarrito()"></div>
+  <div class="cart-drawer">
+    <div class="cart-head">
+      <h2 id="cart-head-title">Tu carrito</h2>
+      <button class="cart-close" onclick="cerrarCarrito()">✕</button>
+    </div>
+    <div class="cart-items" id="cart-body"></div>
+    <div class="cart-footer" id="cart-footer-zone">
+      <div class="cart-total">
+        <span class="cart-total-label">Total</span>
+        <span class="cart-total-val" id="cart-total">$0</span>
+      </div>
+      <button class="cart-ig-btn" id="cart-checkout-btn" onclick="irACheckout()">Continuar pedido</button>
+      <div class="cart-note">Completa tus datos y te contactamos por Instagram para coordinar el pago.</div>
+    </div>
+  </div>
+</div>
+
+<script>
+var GAS_URL='https://script.google.com/macros/s/AKfycbymkq81nv85-kf3QIbjnkPfYyQwN6PZIn9r8GsJ7iVMYbgL5CtvLCADHc9c5CCXtMCl/exec';
+var IMG_BASE='https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Hits@main/Imagenes/';
+
+// ── Mapa de imágenes: clave = "numero_IDIOMA" (ej: "1_ENG", "206_JAP")
+// Construido desde el listado exacto de archivos del repo.
+// Los archivos ENG/JAP usan sufijo _ENG.jpg / _JAP.jpg
+// Los archivos JAP numéricos con doble guion bajo tienen su número como primer grupo.
+var IMGS = (function(){
+  var files = [
+    "001_Reshiram_Charizard_GX_20_ENG.jpg",
+    "002_Charizard_Braixen_GX_22_ENG.jpg",
+    "003_Charizard_VSTAR_BRS_174_ENG.jpg",
+    "004_Charizard_VMAX_SVP_SWSH261_ENG.jpg",
+    "005_Charizard_V_SVP_SWSH260_ENG.jpg",
+    "006_Marnies_Grimmsnarl_ex_ASC_287_ENG.jpg",
+    "007_Rayquaza_VMAX_Evolving_Skies_217_ENG.jpg",
+    "008_Gastly_Master_Ball_SV2A_92_JAP.jpg",
+    "009_Crustle_BLK_130_ENG.jpg",
+    "010_Trubbish_WHT_140_ENG.jpg",
+    "011_Team_Rockets_Wobbuffet_Promo_203_ENG.jpg",
+    "012_Kilowattrel_ex_JTG_163_ENG.jpg",
+    "013_Swinub_165_ENG.jpg",
+    "015_Pecharunt_129_ENG.jpg",
+    "016_Houndstone_145_ENG.jpg",
+    "017_Clawitzer_141_ENG.jpg",
+    "018_Gholdengo_ex_231_ENG.jpg",
+    "019_Genesect_ex_161_ENG.jpg",
+    "020_Empoleon_ex_114_ENG.jpg",
+    "021_Kingdra_ex_80_ENG.jpg",
+    "022_Palafin_ex_193_ENG.jpg",
+    "023_Pidgeot_ex_217_ENG.jpg",
+    "024_Mamoswine_ex_174_ENG.jpg",
+    "026_Team_Rocket_s_Mewtwo_ex_213_ENG.jpg",
+    "027_Serperior_ex_156_ENG.jpg",
+    "028_Alolan_Exeggutor_V_71_ENG.jpg",
+    "029_Banette_ex_229_ENG.jpg",
+    "030_Absol_ex_214_ENG.jpg",
+    "031_Zapdos_EX_48_ENG.jpg",
+    "032_Voltorb_100_ENG.jpg",
+    "033_Carmine_217_ENG.jpg",
+    "034_Sacred_Charm_122_ENG.jpg",
+    "035_Falkner_251_ENG.jpg",
+    "036_Paldean_Student_231_ENG.jpg",
+    "037_Giacomo_252_ENG.jpg",
+    "038_Raifort_142_ENG.jpg",
+    "039_Dancer_259_ENG.jpg",
+    "040_Paldean_Student_230_ENG.jpg",
+    "041_Gym_Badge_Giovanni_210_ENG.jpg",
+    "042_Gym_Badge_Erika_206_ENG.jpg",
+    "043_Gym_Badge_Blaine_209_ENG.jpg",
+    "044_Gym_Badge_Lt_Surge_205_ENG.jpg",
+    "045_M_Venusaur_EX_2_ENG.jpg",
+    "046_Orbeetle_V_20_ENG.jpg",
+    "047_Trevenant_V_13_ENG.jpg",
+    "048_Mega_Heracross_ex_4_ENG.jpg",
+    "049_Espathra_ex_214_ENG.jpg",
+    "050_Espathra_ex_6_ENG.jpg",
+    "051_Torterra_ex_12_ENG.jpg",
+    "052_Rabsca_ex_25_ENG.jpg",
+    "053_Spidops_ex_19_ENG.jpg",
+    "054_Toedscruel_ex_22_ENG.jpg",
+    "055_Iron_Leaves_ex_25_ENG.jpg",
+    "057_Iron_Leaves_ex_128_ENG.jpg",
+    "058_Whimsicott_ex_5_ENG.jpg",
+    "059_Amoonguss_ex_11_ENG.jpg",
+    "060_Sinistcha_ex_23_ENG.jpg",
+    "062_Lucario_V_78_ENG.jpg",
+    "063_Lucario_ex_51_ENG.jpg",
+    "064_Sandy_Shocks_ex_56_ENG.jpg",
+    "065_Stunfisk_ex_114_ENG.jpg",
+    "066_Great_Tusk_ex_123_ENG.jpg",
+    "067_Regirock_ex_101_ENG.jpg",
+    "068_Klawf_ex_120_ENG.jpg",
+    "069_Mamoswine_ex_79_ENG.jpg",
+    "070_Medicham_ex_80_ENG.jpg",
+    "071_Excadrill_ex_46_ENG.jpg",
+    "072_Great_Tusk_ex_53_ENG.jpg",
+    "073_Ting_Lu_ex_127_ENG.jpg",
+    "074_Ditto_V_50_ENG.jpg",
+    "075_Salamence_V_143_ENG.jpg",
+    "076_Regigigas_V_113_ENG.jpg",
+    "077_Stoutland_V_116_ENG.jpg",
+    "078_Pidgeot_V_137_ENG.jpg",
+    "079_Oinkologne_ex_158_ENG.jpg",
+    "080_Maushold_ex_155_ENG.jpg",
+    "081_Squawkabilly_ex_160_ENG.jpg",
+    "082_Terapagos_ex_128_ENG.jpg",
+    "083_Lugia_ex_82_ENG.jpg",
+    "084_Team_Rocket_s_Persian_ex_150_ENG.jpg",
+    "085_Pidgeot_ex_164_ENG.jpg",
+    "086_Snorlax_ex_76_ENG.jpg",
+    "087_Indeedee_V_SV114_ENG.jpg",
+    "088_Galarian_Articuno_V_58_ENG.jpg",
+    "089_Mew_V_113_ENG.jpg",
+    "090_Shadow_Rider_Calyrex_V_74_ENG.jpg",
+    "091_Unown_V_65_ENG.jpg",
+    "092_Gardevoir_ex_86_ENG.jpg",
+    "093_Clefable_ex_82_ENG.jpg",
+    "094_Mimikyu_ex_69_ENG.jpg",
+    "095_Meloetta_ex_44_ENG.jpg",
+    "096_Alcremie_ex_75_ENG.jpg",
+    "097_Zacian_V_138_ENG.jpg",
+    "098_Melmetal_V_47_ENG.jpg",
+    "099_Magearna_V_128_ENG.jpg",
+    "100_Aggron_V_96_ENG.jpg",
+    "101_Empoleon_ex_70_ENG.jpg",
+    "102_Gholdengo_ex_139_ENG.jpg",
+    "103_Gholdengo_ex_139__Liga_ENG.jpg",
+    "104_Iron_Treads_ex_143_ENG.jpg",
+    "105_Archaludon_ex_130_ENG.jpg",
+    "106_Genesect_ex_67_ENG.jpg",
+    "107_Melmetal_ex_153_ENG.jpg",
+    "108_Reshiram_V_24_ENG.jpg",
+    "109_Mega_Camerupt_ex_156_ENG.jpg",
+    "110_Mega_Camerupt_ex_22_ENG.jpg",
+    "111_Reshiram_eX_30_ENG.jpg",
+    "112_Victini_ex_33_ENG.jpg",
+    "113_Volcanion_ex_31_ENG.jpg",
+    "114_Oricorio_ex_18_ENG.jpg",
+    "115_Arcanine_ex_32_ENG.jpg",
+    "116_Chi_Yu_ex_40_ENG.jpg",
+    "117_Hearthflame_Mask_Ogerpon_ex_40_ENG.jpg",
+    "118_Greninja_V_73_ENG.jpg",
+    "119_Inteleon_V_78_ENG.jpg",
+    "120_Crabominable_V_76_ENG.jpg",
+    "121_Tsareena_ex_46_ENG.jpg",
+    "122_Blastoise_ex_30_ENG.jpg",
+    "123_Mega_Abomasnow_ex_36_ENG.jpg",
+    "124_Cetitan_ex_65_ENG.jpg",
+    "125_Palafin_ex_61_ENG.jpg",
+    "126_Veluza_ex_43_ENG.jpg",
+    "128_Milotic_ex_42_ENG.jpg",
+    "129_Dondozo_ex_66_ENG.jpg",
+    "130_Kingdra_ex_12_ENG.jpg",
+    "131_Dracozolt_V_58_ENG.jpg",
+    "132_Rotom_V_58_ENG.jpg",
+    "133_Zeraora_V_53_ENG.jpg",
+    "134_Mega_Manectric_ex_158_ENG.jpg",
+    "135_Jolteon_ex_30_ENG.jpg",
+    "136_Iron_Hands_ex_31_ENG.jpg",
+    "138_Tapu_Koko_ex_51_ENG.jpg",
+    "139_Zekrom_ex_34_ENG.jpg",
+    "140_Miraidon_ex_79_ENG.jpg",
+    "141_Miraidon_ex_28_ENG.jpg",
+    "142_Iron_Thorns_ex_77_ENG.jpg",
+    "143_Noivern_ex_69_ENG.jpg",
+    "144_Salamence_ex_114_ENG.jpg",
+    "145_Miraidon_ex_122_ENG.jpg",
+    "146_Brilliant_Blender_164_ENG.jpg",
+    "147_Treasure_Tracker_131_ENG.jpg",
+    "149_Deluxe_Bomb_134_ENG.jpg",
+    "150_Reboot_Pod_158_ENG.jpg",
+    "151_Dangerous_Laser_58_ENG.jpg",
+    "152_Hyper_Aroma_152_ENG.jpg",
+    "154_Pok\u00e2_Vital_A_62_ENG.jpg",
+    "155_Survival_Brace_164_ENG.jpg",
+    "156_Holon_s_Voltorb_71_ENG.jpg",
+    "157_Dusclops_4_ENG.jpg",
+    "158_Team_Aqua_s_Crawdaunt_2_ENG.jpg",
+    "159_Chinchou_50_ENG.jpg",
+    "160_Holon_s_Magnemite_70_ENG.jpg",
+    "161_Chinchou_56_ENG.jpg",
+    "162_Lanturn_38_ENG.jpg",
+    "163_Ancient_Technical_Machine_Steel_86_ENG.jpg",
+    "164_Slaking_13_ENG.jpg",
+    "165_Professor_s_Research_24_ENG.jpg",
+    "166_Rocket_s_Admin_86_ENG.jpg",
+    "167_Here_Comes_Team_Rocket_15_ENG.jpg",
+    "168_Zacian_V_16_ENG.jpg",
+    "169_Zamazenta_V_18_ENG.jpg",
+    "170_Iron_Crown_SVP_146_ENG_PROMO.jpg",
+    "171_Victini_V_SWSH104_ENG_PROMO.jpg",
+    "172_Grimmsnarl_V_SWSH57_ENG_PROMO.jpg",
+    "173_Roaring_Moon_ex_67_ENG_PROMO.jpg",
+    "174_Iron_Valiant_ex_68_ENG_PROMO.jpg",
+    "175_Raikou_GX_SM121_ENG_PROMO.jpg",
+    "176_Tornadus_GX_SM134_ENG_PROMO.jpg",
+    "177_Boltund_V_SWSH85_ENG_PROMO.jpg",
+    "179_Crobat_V_SWSH110_ENG_PROMO.jpg",
+    "180_Origin_Forme_Dialga_VSTAR_SWSH256_ENG_PROMO.jpg",
+    "181_Origin_Forme_Palkia_VSTAR_SWSH254_ENG_PROMO.jpg",
+    "182_Quaxly_82_ENG_PROMO.jpg",
+    "183_Quaxwell_83_ENG_PROMO.jpg",
+    "184_Yveltal_BREAK_66_ENG.jpg",
+    "185_Hisuian_Zoroark_VSTAR_147_ENG.jpg",
+    "186_Kleavor_VSTAR_196_ENG.jpg",
+    "187_Ultra_Necrozma_GX_95_ENG.jpg",
+    "188_Lycanroc_GX_74_ENG.jpg",
+    "189_Kommo_o_GX_100_ENG.jpg",
+    "191_Shadow_Rider_Calyrex_VMAX_75_ENG.jpg",
+    "192_Whimsicott_VSTAR_65_ENG.jpg",
+    "193_Mewtwo_VSTAR_31_ENG.jpg",
+    "194_Magnezone_VSTAR_57_ENG.jpg",
+    "195_Trevenant_BREAK_66_ENG.jpg",
+    "196_Garganacl_178_ENG.jpg",
+    "197_Weavile_183_ENG.jpg",
+    "198_Pidgey_196_ENG.jpg",
+    "199_Arboliva_104_ENG.jpg",
+    "200_Radiant_Greninja_46_ENG.jpg",
+    "201_Radiant_Charjabug_51_ENG.jpg",
+    "202_Radiant_Eternatus_105_ENG.jpg",
+    "203_Radiant_Hisuian_Sneasler_123_ENG.jpg",
+    "204_Yveltal_46_AMAZING_RARE_ENG.jpg",
+    "206__Iron Thorns #77 Pokemon Japanese Cyber Judge_JAP.jpg",
+    "207__Drakloak #212 Pokemon Japanese Mega Dream ex_JAP.jpg",
+    "208__71_Spiritomb #71 Pokemon Japanese Mega Brave_JAP.jpg",
+    "209__Iron Boulder ex #100 Pokemon Japanese Cyber Judge _JAP.jpg",
+    "210__Air Balloon #84 Pokemon Japanese Mega Brave_JAP.jpg",
+    "211__Glass Trumpet #215 Pokemon Japanese Mega Dream ex _JAP.jpg",
+    "212__Bombirdier ex #51 Pokemon Japanese Raging Surf_JAP.jpg",
+    "213__Noivern ex #58 Pokemon Japanese Clay Burst _JAP.jpg",
+    "214__Kilowattrel Ex [Gym] #155-SV-P Pokemon Japanese Promo_JAP.jpg",
+    "215__Magnezone EX #28 Pokemon Japanese Violet Ex _JAP.jpg",
+    "216__Arbok EX #24 Pokemon Japanese Scarlet & Violet 151_JAP.jpg",
+    "217__Paldean Clodsire ex #117 Pokemon Japanese Shiny Treasure ex _JAP.jpg",
+    "218__Toxicroak #55 Pokemon Japanese Scarlet Ex _JAP.jpg",
+    "219__Chien-Pao ex #28 Pokemon Japanese Snow Hazard_JAP.jpg",
+    "220__Chien-Pao ex #54 Pokemon Japanese Shiny Treasure ex_JAP.jpg",
+    "221__Quaquaval ex #43 Pokemon Japanese Shiny Treasure ex_JAP.jpg",
+    "222__Jynx EX #124 Pokemon Japanese Scarlet & Violet 151_JAP.jpg",
+    "223__Medicham ex #54 Pokemon Japanese Stellar Miracle_JAP.jpg",
+    "224__Koraidon ex #114 Pokemon Japanese Shiny Treasure ex_JAP.jpg",
+    "225__Ting-Lu ex #113 Pokemon Japanese Shiny Treasure ex _JAP.jpg",
+    "226__Great Tusk ex #112 Pokemon Japanese Shiny Treasure ex _JAP.jpg",
+    "227__Skeledirge ex #32 Pokemon Japanese Shiny Treasure ex_JAP.jpg",
+    "228__Arcanine EX #16 Pokemon Japanese Violet Ex_JAP.jpg",
+    "229__Skeledirge ex #20 Pokemon Japanese Triplet Beat_JAP.jpg",
+    "230__Ninetales EX #38 Pokemon Japanese Scarlet & Violet 151_JAP.jpg",
+    "231__Chi-Yu ex #35 Pokemon Japanese Shiny Treasure ex_JAP.jpg",
+    "232__Scovillain ex #23 Pokemon Japanese Super Electric Breaker_JAP.jpg",
+    "233__Scream Tail ex #40 Pokemon Japanese Crimson Haze _JAP.jpg",
+    "234__Alakazam ex #75 Pokemon Japanese Shiny Treasure ex_JAP.jpg",
+    "235__Alakazam EX #65 Pokemon Japanese Scarlet & Violet 151_JAP.jpg",
+    "236__Whimsicott VSTAR #50 Pokemon Japanese Star Birth_JAP.jpg",
+    "237__Orbeetle V #10 Pokemon Japanese VMAX Climax_JAP.jpg",
+    "238__Wo-Chien ex #15 Pokemon Japanese Snow Hazard_JAP.jpg",
+    "239__Forretress ex #9 Pokemon Japanese Shiny Treasure ex_JAP.jpg",
+    "240__Spidops EX #8 Pokemon Japanese Violet Ex_JAP.jpg",
+    "241__Espathra ex #23 Pokemon Japanese Shiny Treasure ex_JAP.jpg",
+    "242__Toedscruel ex #19 Pokemon Japanese Shiny Treasure ex_JAP.jpg",
+    "243__Aegislash ex #45 Pokemon Japanese Future Flash_JAP.jpg",
+    "244__Revavroom ex #85 Pokemon Japanese Ruler of the Black Flame_JAP.jpg",
+    "245__Archaludon ex #37 Pokemon Japanese Paradise Dragona_JAP.jpg",
+    "246__Scizor ex #44 Pokemon Japanese Cyber Judge _JAP.jpg",
+    "247__Gholdengo Ex #117 Pokemon Japanese Terastal Festival_JAP.jpg",
+    "248__Corviknight VMAX #116 Pokemon Japanese VMAX Climax_JAP.jpg"
+  ];
+
+  // Estrategia: índice secuencial del archivo (primeros dígitos) + idioma detectado al final
+  // Clave: "NNN_IDIOMA" donde NNN es el número del archivo sin ceros a la izquierda
+  var map = {};
+  files.forEach(function(f){
+    // Detectar idioma: sufijo _ENG o _JAP antes de .jpg
+    var langMatch = f.match(/_([A-Z]{3})(?:_PROMO)?\.jpg$/i);
+    var lang = langMatch ? langMatch[1].toUpperCase() : 'ENG';
+    // Número de índice: primeros dígitos del filename
+    var idxMatch = f.match(/^(\d+)/);
+    if(!idxMatch) return;
+    var idx = parseInt(idxMatch[1], 10); // quita ceros
+    var key = idx + '_' + lang;
+    map[key] = f;
+  });
+  return map;
+})();
+
+// Busca imagen por índice de archivo + idioma
+// El índice se almacena en el Sheet como campo adicional o se infiere del nombre de carta.
+// Como el GAS NO devuelve un índice de archivo, la única forma confiable es
+// indexar por nombre de carta + idioma. Construimos un mapa secundario nombre→idx.
+var IMGS_BY_NAME = (function(){
+  // Mapeo manual: nombre normalizado → índice de archivo para ENG y JAP por separado
+  // Extraído del listado de archivos
+  var nameToIdx = {};
+  Object.keys(IMGS).forEach(function(k){
+    var parts = k.split('_');
+    var idx = parts[0];
+    var lang = parts[1];
+    var fname = IMGS[k];
+    // Extraer nombre desde el filename
+    var noExt = fname.replace(/\.[^.]+$/,'');
+    // Para archivos ENG: NNN_Nombre_..._ENG → extraer la parte media
+    // Para archivos JAP: NNN__Nombre #num ... _JAP
+    var name;
+    if(lang === 'ENG'){
+      // Quitar prefijo NNN_ y sufijo _ENG(_PROMO)?
+      name = noExt.replace(/^\d+_/,'').replace(/_ENG(_PROMO)?$/,'').replace(/_/g,' ').toLowerCase().trim();
+    } else {
+      // JAP: "NNN__Nombre #num ..." → extraer entre __ y #
+      var japMatch = noExt.match(/__([^#]+)/);
+      name = japMatch ? japMatch[1].trim().toLowerCase() : '';
+    }
+    if(name){
+      if(!nameToIdx[name]) nameToIdx[name] = {};
+      nameToIdx[name][lang] = idx;
+    }
+  });
+  return nameToIdx;
+})();
+
+function getImgUrl(item, idioma){
+  // Idioma del GAS: ESP / ENG / JAP
+  // Archivos en repo: _ENG.jpg / _JAP.jpg (no hay ESP en este repo)
+  var lang = (idioma === 'JAP') ? 'JAP' : 'ENG';
+  // Primero intentar por nombre normalizado
+  var nombre = (item.nombre||'').toLowerCase().trim();
+  if(IMGS_BY_NAME[nombre] && IMGS_BY_NAME[nombre][lang]){
+    var idx = IMGS_BY_NAME[nombre][lang];
+    var key = idx + '_' + lang;
+    if(IMGS[key]) return IMG_BASE + encodeURIComponent(IMGS[key]).replace(/%20/g,' ');
+  }
+  // Fallback: buscar por número de carta + idioma en los filenames
+  var num = String(item.numero||'').trim().replace(/^0+/,'');
+  // Recorrer IMGS buscando coincidencia de número en el filename
+  var keys = Object.keys(IMGS);
+  for(var i=0;i<keys.length;i++){
+    if(keys[i].split('_')[1] !== lang) continue;
+    var f = IMGS[keys[i]];
+    // Para ENG: el número de carta aparece antes de _ENG
+    if(lang==='ENG'){
+      var numInFile = f.replace(/_ENG(_PROMO)?\.jpg$/,'').split('_').pop();
+      if(numInFile === num) return IMG_BASE + encodeURIComponent(f).replace(/%20/g,' ');
+    } else {
+      // Para JAP: el número aparece después de #
+      var hashMatch = f.match(/#(\d+)/);
+      if(hashMatch && hashMatch[1].replace(/^0+/,'') === num) return IMG_BASE + encodeURIComponent(f).replace(/%20/g,' ');
+    }
+  }
+  return null;
+}
+
+// ── Rareza → clase CSS badge ──
+function rarClass(r){
+  if(!r) return 'rar-default';
+  var map = {
+    'NRML':'rar-nrml','HOLO':'rar-holo','REV-H':'rar-revh','PKBL':'rar-pkbl',
+    'PROMO':'rar-promo','EX':'rar-ex','DR':'rar-dr','UR':'rar-ur',
+    'V':'rar-v','VMAX':'rar-vmax','VSTAR':'rar-vstar','ILL':'rar-ill',
+    'SIR':'rar-sir','HR/SR':'rar-hrsr','SHR':'rar-shr','SHUR':'rar-shur',
+    'RADR':'rar-radr','AMZR':'rar-amzr','BREAK':'rar-break',
+    'MSTBL':'rar-mstbl','ACE':'rar-ace','LIGA':'rar-liga'
+  };
+  return map[r] || 'rar-default';
+}
+
+// ── Estado ──
+var INVENTARIO=[], GAS_LOADED=false, CARRITO=[], CARD_IDIOMA={};
+var VM='grid', QF='', RF='', SF='', IF_='', DISPF='', ORDF='';
+
+// ── GAS stock helpers ──
+// GAS devuelve: stk_esp, prc_esp, stk_eng, prc_eng, stk_jap, prc_jap
+function getStk(it,idioma){
+  if(idioma==='ESP') return Number(it.stk_esp)||0;
+  if(idioma==='JAP') return Number(it.stk_jap)||0;
+  return Number(it.stk_eng)||0;
+}
+function getPrc(it,idioma){
+  if(idioma==='ESP') return Number(it.prc_esp)||0;
+  if(idioma==='JAP') return Number(it.prc_jap)||0;
+  return Number(it.prc_eng)||0;
+}
+function getIdiomasDisp(it){
+  var out=[];
+  if((Number(it.stk_esp)||0)>0||(Number(it.prc_esp)||0)>0) out.push('ESP');
+  if((Number(it.stk_eng)||0)>0||(Number(it.prc_eng)||0)>0) out.push('ENG');
+  if((Number(it.stk_jap)||0)>0||(Number(it.prc_jap)||0)>0) out.push('JAP');
+  return out;
+}
+function stkTotal(it){ return (Number(it.stk_esp)||0)+(Number(it.stk_eng)||0)+(Number(it.stk_jap)||0); }
+
+function itemKey(it){ return (it.nombre+'|'+it.set+'|'+it.numero+'|'+it.rareza); }
+function idiomaActivo(it){
+  var k=itemKey(it);
+  if(CARD_IDIOMA[k]) return CARD_IDIOMA[k];
+  var d=getIdiomasDisp(it);
+  return d.length?d[0]:'ENG';
+}
+function setIdiomaCard(k,idioma){ CARD_IDIOMA[k]=idioma; renderAll(); }
+function clp(n){ return '$ '+Math.round(n).toLocaleString('es-CL'); }
+
+// ── Sync GAS ──
+async function syncGAS(){
+  var bar=document.getElementById('syncBar');
+  bar.className='sync-bar show'; bar.textContent='Cargando inventario...';
+  try{
+    var resp=await fetch(GAS_URL+'?carpeta=HT');
+    var data=await resp.json();
+    if(data.ok&&data.data){
+      INVENTARIO=data.data;
+      GAS_LOADED=true;
+      var now=new Date().toLocaleTimeString('es-CL',{hour:'2-digit',minute:'2-digit'});
+      bar.textContent='Inventario actualizado - '+now;
+      setTimeout(function(){bar.className='sync-bar';},4000);
+      buildFiltros();
+      renderAll();
+    } else {
+      bar.textContent='Error al cargar: '+(data.error||'respuesta inválida');
+      setTimeout(function(){bar.className='sync-bar';},4000);
+    }
+  }catch(e){
+    bar.textContent='Error de conexión';
+    setTimeout(function(){bar.className='sync-bar';},3000);
+  }
+}
+
+// ── Build filtros ──
+function buildFiltros(){
+  var rarezas=[], sets=[];
+  INVENTARIO.forEach(function(it){
+    if(it.rareza&&rarezas.indexOf(it.rareza)<0) rarezas.push(it.rareza);
+    if(it.set_nombre&&sets.indexOf(it.set_nombre)<0) sets.push(it.set_nombre);
+  });
+  rarezas.sort(); sets.sort();
+  var rOpts='<option value="">Rareza</option>'+rarezas.map(function(r){return '<option>'+r+'</option>';}).join('');
+  var sOpts='<option value="">Set</option>'+sets.map(function(s){return '<option>'+s+'</option>';}).join('');
+  var fb=document.getElementById('filtros-bar');
+  fb.innerHTML=
+    '<div class="bar bar-search-row">'
+    +'<div class="search-wrap"><input type="text" id="search-input" placeholder="Buscar carta..." oninput="setQ(this.value)">'
+    +'<button class="search-clear" id="search-clear" onclick="clearQ()" style="display:none">×</button></div></div>'
+    +'<div class="bar bar-filters-row">'
+    +'<select class="il-select" onchange="setRF(this.value)">'+rOpts+'</select>'
+    +'<select class="il-select" onchange="setSF(this.value)">'+sOpts+'</select>'
+    +'<select class="il-select" onchange="setIF(this.value)"><option value="">Idioma</option><option>ENG</option><option>ESP</option><option>JAP</option></select>'
+    +'<select class="il-select" onchange="setDISPF(this.value)"><option value="">Disponibilidad</option><option value="con">Con stock</option><option value="sin">Sin stock</option></select>'
+    +'<select class="il-select" onchange="setORDF(this.value)"><option value="">Orden</option><option value="az">A → Z</option><option value="za">Z → A</option><option value="precio-asc">Precio ↑</option><option value="precio-desc">Precio ↓</option></select>'
+    +'<button class="vb" onclick="limpiarFiltros()">✕ Limpiar</button>'
+    +'<div class="view-toggle"><span class="view-toggle-label">Vista</span>'
+    +'<button class="vb-icon'+(VM==='grid'?' on':'')+'" id="vb-grid" onclick="setV(\'grid\',this)" title="Galería"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></button>'
+    +'<button class="vb-icon'+(VM==='table'?' on':'')+'" id="vb-table" onclick="setV(\'table\',this)" title="Tabla"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>'
+    +'</div></div>';
+}
+
+function ajustarOffset(){var ft=document.getElementById('fixed-top');var tm=document.getElementById('tab-main');if(ft&&tm)tm.style.paddingTop=ft.offsetHeight+'px';}
+if(window.ResizeObserver){new ResizeObserver(ajustarOffset).observe(document.getElementById('fixed-top'));}else{window.addEventListener('resize',ajustarOffset);window.addEventListener('load',ajustarOffset);}
+
+function setQ(v){QF=v;var b=document.getElementById('search-clear');if(b)b.style.display=v?'flex':'none';renderAll();}
+function clearQ(){var i=document.getElementById('search-input');if(i)i.value='';setQ('');}
+function setRF(v){RF=v;renderAll();}
+function setSF(v){SF=v;renderAll();}
+function setIF(v){IF_=v;renderAll();}
+function setDISPF(v){DISPF=v;renderAll();}
+function setORDF(v){ORDF=v;renderAll();}
+function limpiarFiltros(){QF='';RF='';SF='';IF_='';DISPF='';ORDF='';document.querySelectorAll('#filtros-bar select').forEach(function(s){s.value='';});var i=document.getElementById('search-input');if(i)i.value='';var b=document.getElementById('search-clear');if(b)b.style.display='none';renderAll();}
+function setV(m,btn){VM=m;document.querySelectorAll('.vb-icon').forEach(function(b){b.classList.remove('on');});btn.classList.add('on');renderAll();}
+
+function filtered(){
+  var q=QF.toLowerCase();
+  var rows=INVENTARIO.filter(function(it){
+    var mQ=!q||(it.nombre||'').toLowerCase().indexOf(q)>=0||(it.set_nombre||'').toLowerCase().indexOf(q)>=0;
+    var mR=!RF||(it.rareza||'')===RF;
+    var mS=!SF||(it.set_nombre||'')===SF;
+    var mI=true;
+    if(IF_==='ENG') mI=(Number(it.stk_eng)||0)>0||(Number(it.prc_eng)||0)>0;
+    else if(IF_==='ESP') mI=(Number(it.stk_esp)||0)>0||(Number(it.prc_esp)||0)>0;
+    else if(IF_==='JAP') mI=(Number(it.stk_jap)||0)>0||(Number(it.prc_jap)||0)>0;
+    var mD=true;
+    if(DISPF==='con') mD=stkTotal(it)>0;
+    else if(DISPF==='sin') mD=stkTotal(it)===0;
+    return mQ&&mR&&mS&&mI&&mD;
+  });
+  if(ORDF==='az') rows.sort(function(a,b){return (a.nombre||'').localeCompare(b.nombre||'');});
+  else if(ORDF==='za') rows.sort(function(a,b){return (b.nombre||'').localeCompare(a.nombre||'');});
+  else if(ORDF==='precio-asc'||ORDF==='precio-desc'){
+    rows.sort(function(a,b){
+      var pa=Math.min(Number(a.prc_eng)||99999,Number(a.prc_esp)||99999,Number(a.prc_jap)||99999);
+      var pb=Math.min(Number(b.prc_eng)||99999,Number(b.prc_esp)||99999,Number(b.prc_jap)||99999);
+      if(pa===99999)pa=0; if(pb===99999)pb=0;
+      return ORDF==='precio-asc'?pa-pb:pb-pa;
+    });
+  }
+  return rows;
+}
+
+function renderAll(){
+  var cont=document.getElementById('v-main');
+  if(!cont) return;
+  if(!GAS_LOADED){cont.innerHTML='<div class="nores" style="padding:60px 20px"><div style="font-size:2rem;margin-bottom:12px">⏳</div>Cargando inventario...</div>';return;}
+  var rows=filtered();
+  if(!rows.length){cont.innerHTML='<div class="nores">Sin resultados</div>';return;}
+  if(VM==='table') renderTable(rows,cont);
+  else renderGrid(rows,cont);
+}
+
+function buildCardHtml(it){
+  var k=itemKey(it);
+  var idioma=idiomaActivo(it);
+  var disp=getIdiomasDisp(it);
+  var stk=getStk(it,idioma);
+  var prc=getPrc(it,idioma);
+  var agotado=stkTotal(it)===0;
+  var url=getImgUrl(it,idioma);
+
+  var imgHtml=url
+    ?'<img src="'+url+'" alt="'+it.nombre+'" loading="lazy" onerror="this.onerror=null;this.parentElement.innerHTML=\'<div class=&quot;ph&quot;>'+it.nombre.replace(/['"]/g,'')+'</div>\'">'
+    :'<div class="ph">'+it.nombre+'<br><small style="opacity:.5">'+String(it.numero||'')+'</small></div>';
+
+  var agotadoOvr=agotado?'<div class="agotado-center">Agotado</div>':'';
+
+  var langHtml='';
+  if(disp.length>1){
+    langHtml='<div class="lang-row">';
+    disp.forEach(function(idm){
+      var s=getStk(it,idm);
+      var act=idioma===idm;
+      langHtml+='<button class="lang-btn'+(act?' active':'')+(s===0?' agotado-lang':'')+'"'
+        +(s>0?' onclick="setIdiomaCard('+JSON.stringify(k)+','+JSON.stringify(idm)+')"':' disabled')
+        +'>'+idm+'</button>';
+    });
+    langHtml+='</div>';
+  } else if(disp.length===1){
+    langHtml='<div class="lang-row"><span class="lang-btn active" style="cursor:default">'+disp[0]+'</span></div>';
+  }
+
+  var en=CARRITO.find(function(c){return c.key===k&&c.idioma===idioma;});
+  var qty=en?en.qty:0;
+  var precioHtml='';
+  if(!agotado){
+    precioHtml='<div class="precio-row">'
+      +'<div><div class="precio-val">'+(prc>0?clp(prc):'Sin precio')+'</div>'
+      +'<div class="stk-disp">'+stk+' disp.</div></div>'
+      +(prc>0&&stk>0
+        ?'<div class="qty-wrap">'
+          +'<button class="qty-btn" onclick="cambiarQty('+JSON.stringify(k)+','+JSON.stringify(idioma)+','+(qty>0?-1:0)+')" '+(qty===0?'disabled':'')+'>−</button>'
+          +'<span class="qty-num" style="color:'+(qty>0?'var(--accent)':'var(--txm)')+'">'+qty+'</span>'
+          +'<button class="qty-btn" onclick="cambiarQty('+JSON.stringify(k)+','+JSON.stringify(idioma)+',1)" '+(qty>=stk?'disabled':'')+'>+</button>'
+          +'</div>'
+        :'')
+      +'</div>';
+  }
+
+  return '<div class="ci'+(agotado?' agotado':'')+'">'
+    +'<div class="imgw">'+imgHtml+agotadoOvr+'</div>'
+    +'<span class="vbdg '+rarClass(it.rareza)+'">'+it.rareza+'</span>'
+    +'<div class="info">'
+    +'<div class="pn">'+it.nombre+'</div>'
+    +'<div class="sn">'+(it.set_nombre||it.set||'—')+'</div>'
+    +'<div class="cn">'+(it.set||'—')+' · '+(it.numero||'—')+'</div>'
+    +langHtml+precioHtml
+    +'</div></div>';
+}
+
+function renderGrid(rows,cont){
+  var h='<div class="grid">';
+  rows.forEach(function(it){h+='<div id="cw-'+CSS.escape(itemKey(it))+'">'+buildCardHtml(it)+'</div>';});
+  cont.innerHTML=h+'</div>';
+}
+
+function renderTable(rows,cont){
+  var h='<div class="tbl-scroll"><table class="tbl"><thead><tr>'
+    +'<th>Img</th><th>Carta</th><th>Set</th><th>Rareza</th><th>Idioma</th><th>Precio</th><th>Stock</th><th>Agregar</th>'
+    +'</tr></thead><tbody>';
+  rows.forEach(function(it){
+    var k=itemKey(it);
+    var idioma=idiomaActivo(it);
+    var disp=getIdiomasDisp(it);
+    var stk=getStk(it,idioma);
+    var prc=getPrc(it,idioma);
+    var agotado=stkTotal(it)===0;
+    var url=getImgUrl(it,idioma);
+    var imgHtml=url?'<img src="'+url+'" alt="'+it.nombre+'" style="width:44px;border-radius:4px" loading="lazy">':'—';
+    var langBtns='';
+    disp.forEach(function(idm){
+      var s=getStk(it,idm);
+      langBtns+='<button class="lang-btn'+(idioma===idm?' active':'')+(s===0?' agotado-lang':'')+'"'
+        +(s>0?' onclick="setIdiomaCard('+JSON.stringify(k)+','+JSON.stringify(idm)+')"':' disabled')+'>'+idm+'</button> ';
+    });
+    var en=CARRITO.find(function(c){return c.key===k&&c.idioma===idioma;});
+    var qty=en?en.qty:0;
+    var cartCell='';
+    if(stk>0&&prc>0){
+      cartCell='<div class="qty-wrap">'
+        +'<button class="qty-btn" onclick="cambiarQty('+JSON.stringify(k)+','+JSON.stringify(idioma)+','+(qty>0?-1:0)+')" '+(qty===0?'disabled':'')+'>−</button>'
+        +'<span class="qty-num">'+qty+'</span>'
+        +'<button class="qty-btn" onclick="cambiarQty('+JSON.stringify(k)+','+JSON.stringify(idioma)+',1)" '+(qty>=stk?'disabled':'')+'>+</button></div>';
+    }
+    h+='<tr'+(agotado?' class="agotado-row"':'')+' id="tr-'+CSS.escape(k)+'">'
+      +'<td>'+imgHtml+'</td>'
+      +'<td><strong>'+it.nombre+'</strong></td>'
+      +'<td style="font-size:.78rem;color:var(--txm)">'+(it.set_nombre||it.set||'—')+'</td>'
+      +'<td><span class="vbdg '+rarClass(it.rareza)+'" style="position:static;display:inline-block">'+it.rareza+'</span></td>'
+      +'<td>'+langBtns+'</td>'
+      +'<td>'+(prc>0?clp(prc):'—')+'</td>'
+      +'<td>'+stk+'</td>'
+      +'<td>'+cartCell+'</td>'
+      +'</tr>';
+  });
+  cont.innerHTML=h+'</tbody></table></div>';
+}
+
+// ── Carrito ──
+function cambiarQty(k,idioma,delta){
+  var it=INVENTARIO.find(function(x){return itemKey(x)===k;});
+  if(!it) return;
+  var stk=getStk(it,idioma), prc=getPrc(it,idioma);
+  var idx=CARRITO.findIndex(function(c){return c.key===k&&c.idioma===idioma;});
+  if(idx>=0){
+    var nv=CARRITO[idx].qty+delta;
+    if(nv<=0) CARRITO.splice(idx,1); else CARRITO[idx].qty=Math.min(nv,stk);
+  } else if(delta>0&&prc>0&&stk>0){
+    CARRITO.push({key:k,nombre:it.nombre,rareza:it.rareza,idioma:idioma,precio:prc,qty:1,img:getImgUrl(it,idioma),set:it.set||'',set_nombre:it.set_nombre||'',numero:it.numero||''});
+  }
+  actualizarCarritoBtn();
+  renderAll();
+}
+
+function actualizarCarritoBtn(){
+  var total=CARRITO.reduce(function(s,c){return s+c.qty;},0);
+  var cnt=document.getElementById('cart-count');
+  cnt.textContent=total; cnt.className='cart-count'+(total===0?' zero':'');
+  if(document.getElementById('carrito-panel').classList.contains('show')) renderCarritoPanel();
+}
+
+var CHECKOUT_VIEW='cart', entregaMode='', direccionMode='domicilio';
+function abrirCarrito(){CHECKOUT_VIEW='cart';document.getElementById('carrito-panel').classList.add('show');renderCarritoPanel();}
+function cerrarCarrito(){document.getElementById('carrito-panel').classList.remove('show');}
+function renderCarritoPanel(){if(CHECKOUT_VIEW==='cart')renderVistaCarrito();else if(CHECKOUT_VIEW==='form')renderVistaFormulario();else if(CHECKOUT_VIEW==='success')renderVistaExito();}
+
+function renderVistaCarrito(){
+  document.getElementById('cart-head-title').textContent='Tu carrito';
+  var body=document.getElementById('cart-body'), footer=document.getElementById('cart-footer-zone');
+  footer.style.display='block';
+  if(!CARRITO.length){
+    body.innerHTML='<div class="cart-empty">Tu carrito está vacío.</div>';
+    document.getElementById('cart-total').textContent='$0';
+    footer.querySelector('#cart-checkout-btn').style.display='none';
+    footer.querySelector('.cart-note').style.display='none'; return;
+  }
+  footer.querySelector('#cart-checkout-btn').style.display='block';
+  footer.querySelector('.cart-note').style.display='block';
+  var total=0,h='';
+  CARRITO.forEach(function(c){
+    var sub=c.precio*c.qty; total+=sub;
+    h+='<div class="cart-item">';
+    if(c.img) h+='<img src="'+c.img+'" alt="'+c.nombre+'">';
+    h+='<div class="cart-item-info"><div class="cart-item-name">'+c.nombre+'</div>'
+      +'<div class="cart-item-meta">'+c.rareza+' · '+c.idioma+' · '+(c.set_nombre||c.set||'—')+' #'+c.numero+'</div>'
+      +'<div style="font-size:.72rem;color:var(--txm);margin-top:2px">'+clp(c.precio)+' × '+c.qty+'</div></div>'
+      +'<div style="text-align:right;flex-shrink:0"><div class="cart-item-price">'+clp(sub)+'</div>'
+      +'<div class="qty-wrap" style="margin-top:4px;justify-content:flex-end">'
+      +'<button class="qty-btn" onclick="cambiarQty('+JSON.stringify(c.key)+','+JSON.stringify(c.idioma)+',-1)">−</button>'
+      +'<span class="qty-num">'+c.qty+'</span>'
+      +'<button class="qty-btn" onclick="cambiarQty('+JSON.stringify(c.key)+','+JSON.stringify(c.idioma)+',1)">+</button>'
+      +'</div></div>'
+      +'<button class="cart-remove" onclick="quitarCart('+JSON.stringify(c.key)+','+JSON.stringify(c.idioma)+')">✕</button></div>';
+  });
+  body.innerHTML=h;
+  document.getElementById('cart-total').textContent=clp(total);
+}
+
+function quitarCart(k,idioma){
+  var idx=CARRITO.findIndex(function(c){return c.key===k&&c.idioma===idioma;});
+  if(idx>=0) CARRITO.splice(idx,1);
+  actualizarCarritoBtn(); renderAll(); renderCarritoPanel();
+}
+function irACheckout(){if(!CARRITO.length)return;CHECKOUT_VIEW='form';renderCarritoPanel();}
+function volverAlCarrito(){CHECKOUT_VIEW='cart';renderCarritoPanel();}
+
+function renderVistaFormulario(){
+  document.getElementById('cart-head-title').textContent='Tus datos';
+  document.getElementById('cart-footer-zone').style.display='none';
+  var body=document.getElementById('cart-body');
+  body.innerHTML=
+    '<div class="field"><label>Nombre y apellido <span class="req">*</span></label>'
+    +'<input type="text" id="ck-nombre" placeholder="Ej: María Pérez">'
+    +'<div class="field-error" id="err-ck-nombre">Ingresa tu nombre y apellido.</div></div>'
+    +'<div class="field"><label>Usuario de Instagram <span class="req">*</span></label>'
+    +'<div class="ig-wrap"><span class="ig-prefix">@</span>'
+    +'<input type="text" id="ck-usuario" placeholder="tu_usuario" oninput="this.value=this.value.replace(/@/g,\'\')"></div>'
+    +'<div class="field-error" id="err-ck-usuario">Necesitamos tu usuario para contactarte.</div></div>'
+    +'<div class="field"><label>Correo electrónico <span class="req">*</span></label>'
+    +'<input type="email" id="ck-correo" placeholder="Ej: maria@gmail.com">'
+    +'<div class="field-error" id="err-ck-correo">Ingresa un correo válido.</div></div>'
+    +'<div class="checkout-divider"></div>'
+    +'<div class="checkout-title">¿Cómo lo recibes?</div>'
+    +'<div class="toggle-group">'
+    +'<button class="toggle-btn" id="ck-btnRetiro" onclick="setEntregaHT(\'retiro\')">Retiro en persona</button>'
+    +'<button class="toggle-btn" id="ck-btnEnvio" onclick="setEntregaHT(\'envio\')">Envío a todo Chile</button>'
+    +'</div><div class="field-error" id="err-ck-entrega">Elige una opción de entrega.</div>'
+    +'<div class="section-retiro" id="ck-sectionRetiro">'
+    +'<div class="retiro-info"><strong>Paldea Games</strong> — te enviamos la dirección exacta al coordinar.<br>'
+    +'<strong>Lunes a viernes</strong> 10:00–18:30 | <strong>Sábado</strong> 10:00–14:00'
+    +'<br><a href="https://maps.app.goo.gl/iuDSCBxPxVADgiUKA" target="_blank" class="retiro-link">Ver referencia en el mapa →</a></div>'
+    +'<div class="row2" style="margin-top:12px">'
+    +'<div class="field"><label>Día preferido <span class="req">*</span></label>'
+    +'<select id="ck-retiroDia"><option value="">Elige un día</option><option>Lunes</option><option>Martes</option><option>Miércoles</option><option>Jueves</option><option>Viernes</option><option>Sábado</option></select>'
+    +'<div class="field-error" id="err-ck-retiroDia">Elige un día.</div></div>'
+    +'<div class="field"><label>Hora preferida <span class="req">*</span></label>'
+    +'<select id="ck-retiroHora"><option value="">Elige una hora</option>'
+    +['10:00','10:30','11:00','11:30','12:00','12:30','13:00','13:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30','18:00'].map(function(h){return '<option>'+h+'</option>';}).join('')
+    +'</select><div class="field-error" id="err-ck-retiroHora">Elige una hora.</div></div></div></div>'
+    +'<div class="section-envio" id="ck-sectionEnvio">'
+    +'<div class="field"><label>RUT <span class="req">*</span></label>'
+    +'<input type="text" id="ck-rut" placeholder="12345678-9" maxlength="12" oninput="formatRutHT(this)">'
+    +'<div class="field-error" id="err-ck-rut">Ingresa tu RUT.</div></div>'
+    +'<div class="row2">'
+    +'<div class="field"><label>Celular <span class="req">*</span></label>'
+    +'<div class="cel-wrap"><span class="cel-prefix">+569</span>'
+    +'<input type="tel" id="ck-celular" placeholder="12345678" maxlength="8" inputmode="numeric" oninput="this.value=this.value.replace(/\\D/g,\'\').slice(0,8)"></div>'
+    +'<div class="field-error" id="err-ck-celular">Ingresa 8 dígitos.</div></div>'
+    +'<div class="field"><label>Correo de envío <span class="req">*</span></label>'
+    +'<div style="display:flex;gap:8px;align-items:center">'
+    +'<input type="email" id="ck-correoEnvio" placeholder="tu@correo.cl" style="margin-bottom:0;flex:1">'
+    +'<button type="button" onclick="usarMismoCorreo()" style="white-space:nowrap;font-size:.68rem;padding:8px 10px;border-radius:8px;border:1px solid var(--brd2);background:var(--surf2);color:var(--txm);cursor:pointer;font-family:\'DM Sans\',sans-serif;flex-shrink:0">Usar el mismo</button>'
+    +'</div><div class="field-error" id="err-ck-correoEnvio">Ingresa un correo válido.</div></div></div>'
+    +'<label style="margin-bottom:8px;margin-top:4px;display:block;font-size:.78rem;color:var(--txm);font-weight:600">Tipo de entrega <span class="req">*</span></label>'
+    +'<div class="addr-tabs">'
+    +'<button class="addr-tab active" id="ck-tabDomicilio" onclick="setDireccionHT(\'domicilio\')">A domicilio</button>'
+    +'<button class="addr-tab" id="ck-tabSucursal" onclick="setDireccionHT(\'sucursal\')">Sucursal Starken</button></div>'
+    +'<div class="sec-domicilio show" id="ck-secDomicilio">'
+    +'<div class="field"><label>Calle <span class="req">*</span></label><input type="text" id="ck-direccion" placeholder="Ej: Av. Nueva Providencia"><div class="field-error" id="err-ck-direccion">Ingresa la calle.</div></div>'
+    +'<div class="row2"><div class="field"><label>Número <span class="req">*</span></label><input type="text" id="ck-dirNumero" placeholder="Ej: 1234"><div class="field-error" id="err-ck-dirNumero">Ingresa el número.</div></div>'
+    +'<div class="field"><label>Dpto / Casa</label><input type="text" id="ck-dirDepto" placeholder="Ej: Depto 502"></div></div>'
+    +'<div class="row2"><div class="field"><label>Comuna <span class="req">*</span></label><input type="text" id="ck-ciudad" placeholder="Ej: Providencia"><div class="field-error" id="err-ck-ciudad">Ingresa tu comuna.</div></div>'
+    +'<div class="field"><label>Ciudad <span class="req">*</span></label><input type="text" id="ck-dirCiudad" placeholder="Ej: Santiago"><div class="field-error" id="err-ck-dirCiudad">Ingresa tu ciudad.</div></div></div></div>'
+    +'<div class="sec-sucursal" id="ck-secSucursal">'
+    +'<div class="field"><label>Nombre sucursal <span class="req">*</span></label><input type="text" id="ck-nombreSucursal" placeholder="Ej: Sucursal Providencia"><div class="field-error" id="err-ck-nombreSucursal">Ingresa el nombre.</div></div>'
+    +'<div class="field"><label>Dirección sucursal <span class="req">*</span></label><input type="text" id="ck-sucursal" placeholder="Ej: Av. Nueva Providencia 1234"><div class="field-error" id="err-ck-sucursal">Ingresa la dirección.</div></div>'
+    +'<div class="row2"><div class="field"><label>Comuna <span class="req">*</span></label><input type="text" id="ck-ciudadSuc" placeholder="Ej: Providencia"><div class="field-error" id="err-ck-ciudadSuc">Ingresa tu comuna.</div></div>'
+    +'<div class="field"><label>Ciudad <span class="req">*</span></label><input type="text" id="ck-ciudadSuc2" placeholder="Ej: Santiago"><div class="field-error" id="err-ck-ciudadSuc2">Ingresa tu ciudad.</div></div></div></div></div>'
+    +'<div class="checkout-row-btns"><button class="checkout-back" onclick="volverAlCarrito()">Volver</button>'
+    +'<button class="checkout-submit" id="ck-submit" onclick="enviarPedidoHT()">Enviar pedido</button></div>';
+}
+
+function setEntregaHT(m){entregaMode=m;document.getElementById('ck-btnRetiro').className='toggle-btn'+(m==='retiro'?' active-retiro':'');document.getElementById('ck-btnEnvio').className='toggle-btn'+(m==='envio'?' active-envio':'');document.getElementById('ck-sectionRetiro').className='section-retiro'+(m==='retiro'?' show':'');document.getElementById('ck-sectionEnvio').className='section-envio'+(m==='envio'?' show':'');}
+function setDireccionHT(m){direccionMode=m;document.getElementById('ck-tabDomicilio').className='addr-tab'+(m==='domicilio'?' active':'');document.getElementById('ck-tabSucursal').className='addr-tab'+(m==='sucursal'?' active':'');document.getElementById('ck-secDomicilio').className='sec-domicilio'+(m==='domicilio'?' show':'');document.getElementById('ck-secSucursal').className='sec-sucursal'+(m==='sucursal'?' show':'');}
+function formatRutHT(el){var v=el.value.replace(/[^0-9kK]/g,'');if(v.length<2){el.value=v;return;}var dv=v.slice(-1),num=v.slice(0,-1);el.value=num.replace(/\B(?=(\d{3})+(?!\d))/g,'.')+'-'+dv;}
+function ckVal(id){var e=document.getElementById(id);return e?e.value.trim():'';}
+function ckErr(id,show){var e=document.getElementById('err-'+id);if(e)e.className='field-error'+(show?' show':'');}
+function usarMismoCorreo(){var b=document.getElementById('ck-correo'),e=document.getElementById('ck-correoEnvio');if(!b||!e)return;var v=b.value.trim();if(!v||!v.includes('@')||!v.includes('.')){b.style.borderColor='var(--red)';return;}b.style.borderColor='';e.value=v;ckErr('ck-correoEnvio',false);}
+
+function validarHT(){
+  var ok=true;
+  ['ck-nombre','ck-usuario'].forEach(function(id){if(!ckVal(id)){ckErr(id,true);ok=false;}else ckErr(id,false);});
+  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(ckVal('ck-correo'))){ckErr('ck-correo',true);ok=false;}else ckErr('ck-correo',false);
+  if(!entregaMode){ckErr('ck-entrega',true);ok=false;}else ckErr('ck-entrega',false);
+  if(entregaMode==='retiro'){
+    if(!ckVal('ck-retiroDia')){ckErr('ck-retiroDia',true);ok=false;}else ckErr('ck-retiroDia',false);
+    if(!ckVal('ck-retiroHora')){ckErr('ck-retiroHora',true);ok=false;}else ckErr('ck-retiroHora',false);
+  }
+  if(entregaMode==='envio'){
+    if(!ckVal('ck-rut')||ckVal('ck-rut').length<5){ckErr('ck-rut',true);ok=false;}else ckErr('ck-rut',false);
+    if(!/^[0-9]{8}$/.test(ckVal('ck-celular'))){ckErr('ck-celular',true);ok=false;}else ckErr('ck-celular',false);
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(ckVal('ck-correoEnvio'))){ckErr('ck-correoEnvio',true);ok=false;}else ckErr('ck-correoEnvio',false);
+    if(direccionMode==='domicilio'){
+      ['ck-direccion','ck-dirNumero','ck-ciudad','ck-dirCiudad'].forEach(function(id){if(!ckVal(id)){ckErr(id,true);ok=false;}else ckErr(id,false);});
+    } else {
+      ['ck-nombreSucursal','ck-sucursal','ck-ciudadSuc','ck-ciudadSuc2'].forEach(function(id){if(!ckVal(id)){ckErr(id,true);ok=false;}else ckErr(id,false);});
+    }
+  }
+  return ok;
+}
+
+async function enviarPedidoHT(){
+  if(!validarHT()) return;
+  var btn=document.getElementById('ck-submit');
+  btn.disabled=true; btn.textContent='Enviando...';
+  var dirStr='';
+  if(entregaMode==='envio'){
+    if(direccionMode==='domicilio'){
+      dirStr=[ckVal('ck-direccion'),ckVal('ck-dirNumero'),ckVal('ck-dirDepto'),ckVal('ck-ciudad'),ckVal('ck-dirCiudad')].filter(Boolean).join(', ');
+    } else {
+      dirStr='Sucursal: '+ckVal('ck-nombreSucursal')+' - '+ckVal('ck-sucursal')+', '+ckVal('ck-ciudadSuc')+', '+ckVal('ck-ciudadSuc2');
+    }
+  }
+  var orderItems=CARRITO.map(function(c){
+    return {nombre:c.nombre,set:c.set,set_nombre:c.set_nombre,numero:c.numero,rareza:c.rareza,idioma:c.idioma,cantidad:c.qty,precio_clp:c.precio,subtotal:c.precio*c.qty};
+  });
+  var orderData={
+    carpeta:'HT',
+    cliente:ckVal('ck-nombre'),
+    instagram:'@'+ckVal('ck-usuario').replace('@',''),
+    correo:ckVal('ck-correo'),
+    entrega:entregaMode,
+    dia:entregaMode==='retiro'?ckVal('ck-retiroDia'):null,
+    hora:entregaMode==='retiro'?ckVal('ck-retiroHora'):null,
+    rut:entregaMode==='envio'?ckVal('ck-rut'):null,
+    celular:entregaMode==='envio'?'+569'+ckVal('ck-celular'):null,
+    correo_envio:entregaMode==='envio'?ckVal('ck-correoEnvio'):null,
+    direccion:entregaMode==='envio'?dirStr:null,
+    items:orderItems
+  };
+  try{
+    var url=GAS_URL+'?carpeta=HT&data='+encodeURIComponent(JSON.stringify(orderData));
+    var res=await fetch(url);
+    var data=await res.json();
+    if(data.success===false){alert('Error: '+(data.error||'intenta de nuevo'));btn.disabled=false;btn.textContent='Enviar pedido';return;}
+    CHECKOUT_VIEW='success';
+    window.LAST_ORDER_ID=data.id||'HT-0001';
+    CARRITO=[];actualizarCarritoBtn();renderCarritoPanel();renderAll();
+  }catch(e){alert('Error de conexión. Intenta de nuevo.');btn.disabled=false;btn.textContent='Enviar pedido';}
+}
+
+function renderVistaExito(){
+  document.getElementById('cart-head-title').textContent='Pedido enviado';
+  document.getElementById('cart-footer-zone').style.display='none';
+  document.getElementById('cart-body').innerHTML=
+    '<div class="success-box"><div class="ok-icon">✓</div>'
+    +'<h3>Pedido '+window.LAST_ORDER_ID+' registrado</h3>'
+    +'<p>Te contactaremos por Instagram para confirmar stock y coordinar el pago.</p>'
+    +'<button class="checkout-back" style="margin-top:18px" onclick="cerrarCarrito()">Cerrar</button></div>';
+}
+
+document.addEventListener('wheel',function(e){if(e.ctrlKey)e.preventDefault();},{passive:false});
+document.addEventListener('keydown',function(e){if(e.ctrlKey&&(e.key==='+'||e.key==='-'||e.key==='='||e.key==='0'))e.preventDefault();});
+
+(function(){
+  document.getElementById('tab-main').innerHTML='<div id="v-main"></div>';
+  renderAll();
+  ajustarOffset();
+  syncGAS();
+})();
+</script>
+</body>
+</html>

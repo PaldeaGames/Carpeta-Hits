@@ -520,8 +520,7 @@ function buildCardHtml(it){
   var precioHtml='';
   if(!agotado){
     precioHtml='<div class="precio-row">'
-      +'<div><div class="precio-val">'+(prc>0?clp(prc):'Sin precio')+'</div>'
-      +'<div class="stk-disp">'+stk+' disp.</div></div>'
+      +'<div><div class="precio-val">'+(prc>0?clp(prc):'Sin precio')+'</div></div>'
       +(prc>0&&stk>0
         ?'<div class="qty-wrap">'
           +'<button class="qty-btn" onclick="cambiarQty(\''+k+'\',\''+idioma+'\','+(qty>0?-1:0)+')" '+(qty===0?'disabled':'')+'>−</button>'

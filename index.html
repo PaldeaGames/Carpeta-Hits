@@ -274,258 +274,40 @@ header p{font-size:.75rem;color:var(--txm);margin-top:1px}
 var GAS_URL='https://script.google.com/macros/s/AKfycbymkq81nv85-kf3QIbjnkPfYyQwN6PZIn9r8GsJ7iVMYbgL5CtvLCADHc9c5CCXtMCl/exec';
 var IMG_BASE='https://cdn.jsdelivr.net/gh/PaldeaGames/Carpeta-Hits@main/Imagenes/';
 
-// ── Mapa imagen hardcodeado: nombre_norm|numero → filename
-function normImgKey(nombre,numero){
-  var n=(nombre||'').toLowerCase().replace(/&/g,'').replace(/'/g,'').replace(/\u2019/g,'').replace(/[^a-z0-9\s]/g,' ').replace(/\s+/g,' ').trim();
-  var num=String(numero||'').trim().split('/')[0].replace(/^0+/,'');
-  return n+'|'+num;
+// ── Generación dinámica de nombre de archivo (sin mapa hardcodeado).
+// El nombre del archivo nace directamente de img_id (calculado en el
+// backend como fila_sheet - 3) y del nombre/set/numero de la propia carta,
+// usando la MISMA normalización que el script de renombrado en PowerShell.
+// Si una carta tiene más de una rareza con stock (ej. Gholdengo normal y
+// de Liga), el backend marca img_multi=true y el nombre incluye el sufijo
+// de rareza para diferenciarlas.
+function limpiarCamel(s){
+  s=String(s||'').trim();
+  s=s.normalize('NFKD').replace(/[\u0300-\u036f]/g,''); // quitar tildes
+  s=s.replace(/[^a-zA-Z0-9\s]/g,''); // quitar simbolos, apostrofes, etc
+  var partes=s.split(/\s+/).filter(Boolean);
+  return partes.map(function(p){return p.charAt(0).toUpperCase()+p.slice(1);}).join('');
 }
-var IMG_MAP={
-  "reshiram charizard gx|20":"001_Reshiram_Charizard_GX_20_ENG.jpg",
-  "charizard braixen gx|22":"002_Charizard_Braixen_GX_22_ENG.jpg",
-  "charizard vstar|174":"003_Charizard_VSTAR_BRS_174_ENG.jpg",
-  "charizard vmax|261":"004_Charizard_VMAX_SVP_SWSH261_ENG.jpg",
-  "charizard v|260":"005_Charizard_V_SVP_SWSH260_ENG.jpg",
-  "marnies grimmsnarl ex|287":"006_Marnies_Grimmsnarl_ex_ASC_287_ENG.jpg",
-  "rayquaza vmax|217":"007_Rayquaza_VMAX_Evolving_Skies_217_ENG.jpg",
-  "gastly|92":"008_Gastly_Master_Ball_SV2A_92_JAP.jpg",
-  "crustle|130":"009_Crustle_BLK_130_ENG.jpg",
-  "trubbish|140":"010_Trubbish_WHT_140_ENG.jpg",
-  "team rockets wobbuffet|203":"011_Team_Rockets_Wobbuffet_Promo_203_ENG.jpg",
-  "kilowattrel ex|163":"012_Kilowattrel_ex_JTG_163_ENG.jpg",
-  "swinub|165":"013_Swinub_165_ENG.jpg",
-  "pecharunt|129":"015_Pecharunt_129_ENG.jpg",
-  "houndstone|145":"016_Houndstone_145_ENG.jpg",
-  "clawitzer|141":"017_Clawitzer_141_ENG.jpg",
-  "gholdengo ex|231":"018_Gholdengo_ex_231_ENG.jpg",
-  "genesect ex|161":"019_Genesect_ex_161_ENG.jpg",
-  "empoleon ex|114":"020_Empoleon_ex_114_ENG.jpg",
-  "kingdra ex|80":"021_Kingdra_ex_80_ENG.jpg",
-  "palafin ex|193":"022_Palafin_ex_193_ENG.jpg",
-  "pidgeot ex|217":"023_Pidgeot_ex_217_ENG.jpg",
-  "mamoswine ex|174":"024_Mamoswine_ex_174_ENG.jpg",
-  "team rockets mewtwo ex|213":"026_Team_Rocket_s_Mewtwo_ex_213_ENG.jpg",
-  "serperior ex|156":"027_Serperior_ex_156_ENG.jpg",
-  "alolan exeggutor v|71":"028_Alolan_Exeggutor_V_71_ENG.jpg",
-  "banette ex|229":"029_Banette_ex_229_ENG.jpg",
-  "absol ex|214":"030_Absol_ex_214_ENG.jpg",
-  "zapdos ex|48":"031_Zapdos_EX_48_ENG.jpg",
-  "voltorb|100":"032_Voltorb_100_ENG.jpg",
-  "carmine|217":"033_Carmine_217_ENG.jpg",
-  "sacred charm|122":"034_Sacred_Charm_122_ENG.jpg",
-  "falkner|251":"035_Falkner_251_ENG.jpg",
-  "paldean student|231":"036_Paldean_Student_231_ENG.jpg",
-  "giacomo|252":"037_Giacomo_252_ENG.jpg",
-  "raifort|142":"038_Raifort_142_ENG.jpg",
-  "dancer|259":"039_Dancer_259_ENG.jpg",
-  "paldean student|230":"040_Paldean_Student_230_ENG.jpg",
-  "gym badge giovanni|210":"041_Gym_Badge_Giovanni_210_ENG.jpg",
-  "gym badge erika|206":"042_Gym_Badge_Erika_206_ENG.jpg",
-  "gym badge blaine|209":"043_Gym_Badge_Blaine_209_ENG.jpg",
-  "gym badge lt surge|205":"044_Gym_Badge_Lt_Surge_205_ENG.jpg",
-  "m venusaur ex|2":"045_M_Venusaur_EX_2_ENG.jpg",
-  "orbeetle v|20":"046_Orbeetle_V_20_ENG.jpg",
-  "trevenant v|13":"047_Trevenant_V_13_ENG.jpg",
-  "mega heracross ex|4":"048_Mega_Heracross_ex_4_ENG.jpg",
-  "espathra ex|214":"049_Espathra_ex_214_ENG.jpg",
-  "espathra ex|6":"050_Espathra_ex_6_ENG.jpg",
-  "torterra ex|12":"051_Torterra_ex_12_ENG.jpg",
-  "rabsca ex|25":"052_Rabsca_ex_25_ENG.jpg",
-  "spidops ex|19":"053_Spidops_ex_19_ENG.jpg",
-  "toedscruel ex|22":"054_Toedscruel_ex_22_ENG.jpg",
-  "iron leaves ex|25":"055_Iron_Leaves_ex_25_ENG.jpg",
-  "iron leaves ex|128":"057_Iron_Leaves_ex_128_ENG.jpg",
-  "whimsicott ex|5":"058_Whimsicott_ex_5_ENG.jpg",
-  "amoonguss ex|11":"059_Amoonguss_ex_11_ENG.jpg",
-  "sinistcha ex|23":"060_Sinistcha_ex_23_ENG.jpg",
-  "lucario v|78":"062_Lucario_V_78_ENG.jpg",
-  "lucario ex|51":"063_Lucario_ex_51_ENG.jpg",
-  "sandy shocks ex|56":"064_Sandy_Shocks_ex_56_ENG.jpg",
-  "stunfisk ex|114":"065_Stunfisk_ex_114_ENG.jpg",
-  "great tusk ex|123":"066_Great_Tusk_ex_123_ENG.jpg",
-  "regirock ex|101":"067_Regirock_ex_101_ENG.jpg",
-  "klawf ex|120":"068_Klawf_ex_120_ENG.jpg",
-  "mamoswine ex|79":"069_Mamoswine_ex_79_ENG.jpg",
-  "medicham ex|80":"070_Medicham_ex_80_ENG.jpg",
-  "excadrill ex|46":"071_Excadrill_ex_46_ENG.jpg",
-  "great tusk ex|53":"072_Great_Tusk_ex_53_ENG.jpg",
-  "ting lu ex|127":"073_Ting_Lu_ex_127_ENG.jpg",
-  "ditto v|50":"074_Ditto_V_50_ENG.jpg",
-  "salamence v|143":"075_Salamence_V_143_ENG.jpg",
-  "regigigas v|113":"076_Regigigas_V_113_ENG.jpg",
-  "stoutland v|116":"077_Stoutland_V_116_ENG.jpg",
-  "pidgeot v|137":"078_Pidgeot_V_137_ENG.jpg",
-  "oinkologne ex|158":"079_Oinkologne_ex_158_ENG.jpg",
-  "maushold ex|155":"080_Maushold_ex_155_ENG.jpg",
-  "squawkabilly ex|160":"081_Squawkabilly_ex_160_ENG.jpg",
-  "terapagos ex|128":"082_Terapagos_ex_128_ENG.jpg",
-  "lugia ex|82":"083_Lugia_ex_82_ENG.jpg",
-  "team rockets persian ex|150":"084_Team_Rocket_s_Persian_ex_150_ENG.jpg",
-  "pidgeot ex|164":"085_Pidgeot_ex_164_ENG.jpg",
-  "snorlax ex|76":"086_Snorlax_ex_76_ENG.jpg",
-  "indeedee v|114":"087_Indeedee_V_SV114_ENG.jpg",
-  "galarian articuno v|58":"088_Galarian_Articuno_V_58_ENG.jpg",
-  "mew v|113":"089_Mew_V_113_ENG.jpg",
-  "shadow rider calyrex v|74":"090_Shadow_Rider_Calyrex_V_74_ENG.jpg",
-  "unown v|65":"091_Unown_V_65_ENG.jpg",
-  "gardevoir ex|86":"092_Gardevoir_ex_86_ENG.jpg",
-  "clefable ex|82":"093_Clefable_ex_82_ENG.jpg",
-  "mimikyu ex|69":"094_Mimikyu_ex_69_ENG.jpg",
-  "meloetta ex|44":"095_Meloetta_ex_44_ENG.jpg",
-  "alcremie ex|75":"096_Alcremie_ex_75_ENG.jpg",
-  "zacian v|138":"097_Zacian_V_138_ENG.jpg",
-  "melmetal v|47":"098_Melmetal_V_47_ENG.jpg",
-  "magearna v|128":"099_Magearna_V_128_ENG.jpg",
-  "aggron v|96":"100_Aggron_V_96_ENG.jpg",
-  "empoleon ex|70":"101_Empoleon_ex_70_ENG.jpg",
-  "gholdengo ex|139":"102_Gholdengo_ex_139_ENG.jpg",
-  "iron treads ex|143":"104_Iron_Treads_ex_143_ENG.jpg",
-  "archaludon ex|130":"105_Archaludon_ex_130_ENG.jpg",
-  "genesect ex|67":"106_Genesect_ex_67_ENG.jpg",
-  "melmetal ex|153":"107_Melmetal_ex_153_ENG.jpg",
-  "reshiram v|24":"108_Reshiram_V_24_ENG.jpg",
-  "mega camerupt ex|156":"109_Mega_Camerupt_ex_156_ENG.jpg",
-  "mega camerupt ex|22":"110_Mega_Camerupt_ex_22_ENG.jpg",
-  "reshiram ex|30":"111_Reshiram_eX_30_ENG.jpg",
-  "victini ex|33":"112_Victini_ex_33_ENG.jpg",
-  "volcanion ex|31":"113_Volcanion_ex_31_ENG.jpg",
-  "oricorio ex|18":"114_Oricorio_ex_18_ENG.jpg",
-  "arcanine ex|32":"115_Arcanine_ex_32_ENG.jpg",
-  "chi yu ex|40":"116_Chi_Yu_ex_40_ENG.jpg",
-  "hearthflame mask ogerpon ex|40":"117_Hearthflame_Mask_Ogerpon_ex_40_ENG.jpg",
-  "greninja v|73":"118_Greninja_V_73_ENG.jpg",
-  "inteleon v|78":"119_Inteleon_V_78_ENG.jpg",
-  "crabominable v|76":"120_Crabominable_V_76_ENG.jpg",
-  "tsareena ex|46":"121_Tsareena_ex_46_ENG.jpg",
-  "blastoise ex|30":"122_Blastoise_ex_30_ENG.jpg",
-  "mega abomasnow ex|36":"123_Mega_Abomasnow_ex_36_ENG.jpg",
-  "cetitan ex|65":"124_Cetitan_ex_65_ENG.jpg",
-  "palafin ex|61":"125_Palafin_ex_61_ENG.jpg",
-  "veluza ex|43":"126_Veluza_ex_43_ENG.jpg",
-  "milotic ex|42":"128_Milotic_ex_42_ENG.jpg",
-  "dondozo ex|66":"129_Dondozo_ex_66_ENG.jpg",
-  "kingdra ex|12":"130_Kingdra_ex_12_ENG.jpg",
-  "dracozolt v|58":"131_Dracozolt_V_58_ENG.jpg",
-  "rotom v|58":"132_Rotom_V_58_ENG.jpg",
-  "zeraora v|53":"133_Zeraora_V_53_ENG.jpg",
-  "mega manectric ex|158":"134_Mega_Manectric_ex_158_ENG.jpg",
-  "jolteon ex|30":"135_Jolteon_ex_30_ENG.jpg",
-  "iron hands ex|31":"136_Iron_Hands_ex_31_ENG.jpg",
-  "tapu koko ex|51":"138_Tapu_Koko_ex_51_ENG.jpg",
-  "zekrom ex|34":"139_Zekrom_ex_34_ENG.jpg",
-  "miraidon ex|79":"140_Miraidon_ex_79_ENG.jpg",
-  "miraidon ex|28":"141_Miraidon_ex_28_ENG.jpg",
-  "iron thorns ex|77":"142_Iron_Thorns_ex_77_ENG.jpg",
-  "noivern ex|69":"143_Noivern_ex_69_ENG.jpg",
-  "salamence ex|114":"144_Salamence_ex_114_ENG.jpg",
-  "miraidon ex|122":"145_Miraidon_ex_122_ENG.jpg",
-  "sparkling blender|164":"146_Brilliant_Blender_164_ENG.jpg",
-  "treasure tracker|131":"147_Treasure_Tracker_131_ENG.jpg",
-  "deluxe bomb|134":"149_Deluxe_Bomb_134_ENG.jpg",
-  "reboot pod|158":"150_Reboot_Pod_158_ENG.jpg",
-  "dangerous laser|58":"151_Dangerous_Laser_58_ENG.jpg",
-  "hyper aroma|152":"152_Hyper_Aroma_152_ENG.jpg",
-  "pok vital a|62":"154_Pok\u00e2_Vital_A_62_ENG.jpg",
-  "survival brace|164":"155_Survival_Brace_164_ENG.jpg",
-  "holons voltorb|71":"156_Holon_s_Voltorb_71_ENG.jpg",
-  "dusclops|4":"157_Dusclops_4_ENG.jpg",
-  "team aquas crawdaunt|2":"158_Team_Aqua_s_Crawdaunt_2_ENG.jpg",
-  "chinchou|50":"159_Chinchou_50_ENG.jpg",
-  "holons magnemite|70":"160_Holon_s_Magnemite_70_ENG.jpg",
-  "chinchou|56":"161_Chinchou_56_ENG.jpg",
-  "lanturn|38":"162_Lanturn_38_ENG.jpg",
-  "ancient technical machine steel|86":"163_Ancient_Technical_Machine_Steel_86_ENG.jpg",
-  "slaking|13":"164_Slaking_13_ENG.jpg",
-  "professors research|24":"165_Professor_s_Research_24_ENG.jpg",
-  "rockets admin|86":"166_Rocket_s_Admin_86_ENG.jpg",
-  "here comes team rocket|15":"167_Here_Comes_Team_Rocket_15_ENG.jpg",
-  "zacian v|16":"168_Zacian_V_16_ENG.jpg",
-  "zamazenta v|18":"169_Zamazenta_V_18_ENG.jpg",
-  "ferrothorn|146":"170_Iron_Crown_SVP_146_ENG_PROMO.jpg",
-  "victini v|104":"171_Victini_V_SWSH104_ENG_PROMO.jpg",
-  "grimmsnarl v|57":"172_Grimmsnarl_V_SWSH57_ENG_PROMO.jpg",
-  "roaring moon ex|67":"173_Roaring_Moon_ex_67_ENG_PROMO.jpg",
-  "iron valiant ex|68":"174_Iron_Valiant_ex_68_ENG_PROMO.jpg",
-  "raikou gx|121":"175_Raikou_GX_SM121_ENG_PROMO.jpg",
-  "tornadus gx|134":"176_Tornadus_GX_SM134_ENG_PROMO.jpg",
-  "boltund v|85":"177_Boltund_V_SWSH85_ENG_PROMO.jpg",
-  "crobat v|110":"179_Crobat_V_SWSH110_ENG_PROMO.jpg",
-  "origin forme dialga vstar|256":"180_Origin_Forme_Dialga_VSTAR_SWSH256_ENG_PROMO.jpg",
-  "origin forme palkia vstar|254":"181_Origin_Forme_Palkia_VSTAR_SWSH254_ENG_PROMO.jpg",
-  "quaxly|82":"182_Quaxly_82_ENG_PROMO.jpg",
-  "quaxwell|83":"183_Quaxwell_83_ENG_PROMO.jpg",
-  "yveltal|66":"184_Yveltal_BREAK_66_ENG.jpg",
-  "hisuian zoroark vstar|147":"185_Hisuian_Zoroark_VSTAR_147_ENG.jpg",
-  "kleavor vstar|196":"186_Kleavor_VSTAR_196_ENG.jpg",
-  "ultra necrozma gx|95":"187_Ultra_Necrozma_GX_95_ENG.jpg",
-  "lycanroc gx|74":"188_Lycanroc_GX_74_ENG.jpg",
-  "kommo o gx|100":"189_Kommo_o_GX_100_ENG.jpg",
-  "shadow rider calyrex vmax|75":"191_Shadow_Rider_Calyrex_VMAX_75_ENG.jpg",
-  "whimsicott vstar|65":"192_Whimsicott_VSTAR_65_ENG.jpg",
-  "mewtwo vstar|31":"193_Mewtwo_VSTAR_31_ENG.jpg",
-  "magnezone vstar|57":"194_Magnezone_VSTAR_57_ENG.jpg",
-  "trevenant break|66":"195_Trevenant_BREAK_66_ENG.jpg",
-  "garganacl|178":"196_Garganacl_178_ENG.jpg",
-  "weavile|183":"197_Weavile_183_ENG.jpg",
-  "pidgey|196":"198_Pidgey_196_ENG.jpg",
-  "arboliva|104":"199_Arboliva_104_ENG.jpg",
-  "radiant greninja|46":"200_Radiant_Greninja_46_ENG.jpg",
-  "radiant charjabug|51":"201_Radiant_Charjabug_51_ENG.jpg",
-  "radiant eternatus|105":"202_Radiant_Eternatus_105_ENG.jpg",
-  "radiant hisuian sneasler|123":"203_Radiant_Hisuian_Sneasler_123_ENG.jpg",
-  "yveltal|46":"204_Yveltal_46_AMAZING_RARE_ENG.jpg",
-  "iron thorns|77":"206__Iron Thorns #77 Pokemon Japanese Cyber Judge_JAP.jpg",
-  "drakloak|212":"207__Drakloak #212 Pokemon Japanese Mega Dream ex_JAP.jpg",
-  "spiritomb|71":"208__71_Spiritomb #71 Pokemon Japanese Mega Brave_JAP.jpg",
-  "iron boulder ex|100":"209__Iron Boulder ex #100 Pokemon Japanese Cyber Judge _JAP.jpg",
-  "air balloon|84":"210__Air Balloon #84 Pokemon Japanese Mega Brave_JAP.jpg",
-  "glass trumpet|215":"211__Glass Trumpet #215 Pokemon Japanese Mega Dream ex _JAP.jpg",
-  "bombirdier ex|51":"212__Bombirdier ex #51 Pokemon Japanese Raging Surf_JAP.jpg",
-  "squawkabilly ex|58":"213__Noivern ex #58 Pokemon Japanese Clay Burst _JAP.jpg",
-  "kilowattrel ex|155":"214__Kilowattrel Ex [Gym] #155-SV-P Pokemon Japanese Promo_JAP.jpg",
-  "magnezone ex|28":"215__Magnezone EX #28 Pokemon Japanese Violet Ex _JAP.jpg",
-  "arbok ex|24":"216__Arbok EX #24 Pokemon Japanese Scarlet & Violet 151_JAP.jpg",
-  "great tusk ex|117":"217__Paldean Clodsire ex #117 Pokemon Japanese Shiny Treasure ex _JAP.jpg",
-  "toxicroak|55":"218__Toxicroak #55 Pokemon Japanese Scarlet Ex _JAP.jpg",
-  "chien pao ex|28":"219__Chien-Pao ex #28 Pokemon Japanese Snow Hazard_JAP.jpg",
-  "chien pao ex|54":"220__Chien-Pao ex #54 Pokemon Japanese Shiny Treasure ex_JAP.jpg",
-  "quaquaval ex|43":"221__Quaquaval ex #43 Pokemon Japanese Shiny Treasure ex_JAP.jpg",
-  "jynx ex|124":"222__Jynx EX #124 Pokemon Japanese Scarlet & Violet 151_JAP.jpg",
-  "medicham ex|54":"223__Medicham ex #54 Pokemon Japanese Stellar Miracle_JAP.jpg",
-  "iron treads ex|114":"224__Koraidon ex #114 Pokemon Japanese Shiny Treasure ex_JAP.jpg",
-  "miraidon ex|113":"225__Ting-Lu ex #113 Pokemon Japanese Shiny Treasure ex _JAP.jpg",
-  "koraidon ex|112":"226__Great Tusk ex #112 Pokemon Japanese Shiny Treasure ex _JAP.jpg",
-  "skeledirge ex|32":"227__Skeledirge ex #32 Pokemon Japanese Shiny Treasure ex_JAP.jpg",
-  "arcanine ex|16":"228__Arcanine EX #16 Pokemon Japanese Violet Ex_JAP.jpg",
-  "arboliva|20":"229__Skeledirge ex #20 Pokemon Japanese Triplet Beat_JAP.jpg",
-  "ninetales ex|38":"230__Ninetales EX #38 Pokemon Japanese Scarlet & Violet 151_JAP.jpg",
-  "chi yu ex|35":"231__Chi-Yu ex #35 Pokemon Japanese Shiny Treasure ex_JAP.jpg",
-  "scovillain ex|23":"232__Scovillain ex #23 Pokemon Japanese Super Electric Breaker_JAP.jpg",
-  "scream tail ex|40":"233__Scream Tail ex #40 Pokemon Japanese Crimson Haze _JAP.jpg",
-  "lucario ex|75":"234__Alakazam ex #75 Pokemon Japanese Shiny Treasure ex_JAP.jpg",
-  "alakazam ex|65":"235__Alakazam EX #65 Pokemon Japanese Scarlet & Violet 151_JAP.jpg",
-  "arceus vstar|50":"236__Whimsicott VSTAR #50 Pokemon Japanese Star Birth_JAP.jpg",
-  "orbeetle v|10":"237__Orbeetle V #10 Pokemon Japanese VMAX Climax_JAP.jpg",
-  "cetitan ex|15":"238__Wo-Chien ex #15 Pokemon Japanese Snow Hazard_JAP.jpg",
-  "forretress ex|9":"239__Forretress ex #9 Pokemon Japanese Shiny Treasure ex_JAP.jpg",
-  "toedscool|8":"240__Spidops EX #8 Pokemon Japanese Violet Ex_JAP.jpg",
-  "toedscool|9":"240__Spidops EX #8 Pokemon Japanese Violet Ex_JAP.jpg",
-  "espathra ex|23":"241__Espathra ex #23 Pokemon Japanese Shiny Treasure ex_JAP.jpg",
-  "toedscruel ex|19":"242__Toedscruel ex #19 Pokemon Japanese Shiny Treasure ex_JAP.jpg",
-  "iron crown ex|45":"243__Aegislash ex #45 Pokemon Japanese Future Flash_JAP.jpg",
-  "revavroom ex|85":"244__Revavroom ex #85 Pokemon Japanese Ruler of the Black Flame_JAP.jpg",
-  "archaludon ex|37":"245__Archaludon ex #37 Pokemon Japanese Paradise Dragona_JAP.jpg",
-  "scizor ex|44":"246__Scizor ex #44 Pokemon Japanese Cyber Judge _JAP.jpg",
-  "archaludon ex|117":"247__Gholdengo Ex #117 Pokemon Japanese Terastal Festival_JAP.jpg",
-  "corviknight vmax|116":"248__Corviknight VMAX #116 Pokemon Japanese VMAX Climax_JAP.jpg",
-  "kilowattrel ex|155svp":"214__Kilowattrel Ex [Gym] #155-SV-P Pokemon Japanese Promo_JAP.jpg",
-  "indeedee v|sv114":"087_Indeedee_V_SV114_ENG.jpg",
-  "dracozolt v|58":"131_Dracozolt_V_58_ENG.jpg"
-};
+function limpiarNumeroImg(numero){
+  var s=String(numero||'').trim().split('/')[0];
+  return s.replace(/[^0-9A-Za-z]/g,'');
+}
+function safeRarezaImg(r){
+  return String(r||'').replace(/\//g,'-').replace(/\s+/g,'');
+}
+function nombreArchivoImg(item){
+  if(!item.img_id) return null;
+  var corr=String(item.img_id).padStart(4,'0');
+  var nom=limpiarCamel(item.nombre);
+  var set=limpiarCamel(item.set_nombre||item.set);
+  var num=limpiarNumeroImg(item.numero);
+  var base=corr+'_'+nom+'_'+set+'_'+num;
+  if(item.img_multi) base+='_'+safeRarezaImg(item.rareza);
+  return base+'.jpg';
+}
 
 function getImgUrl(item,idioma){
-  var key=normImgKey(item.nombre,item.numero);
-  var fname=IMG_MAP[key];
+  var fname=nombreArchivoImg(item);
   if(fname) return IMG_BASE+encodeURIComponent(fname).replace(/%20/g,'%20');
   return null;
 }
@@ -737,9 +519,9 @@ function buildCardHtml(it){
       +'<div class="stk-disp">'+stk+' disp.</div></div>'
       +(prc>0&&stk>0
         ?'<div class="qty-wrap">'
-          +'<button class="qty-btn" onclick="cambiarQty('+JSON.stringify(k)+','+JSON.stringify(idioma)+','+(qty>0?-1:0)+')" '+(qty===0?'disabled':'')+'>−</button>'
+          +'<button class="qty-btn" onclick="cambiarQty(\''+k+'\',\''+idioma+'\','+(qty>0?-1:0)+')" '+(qty===0?'disabled':'')+'>−</button>'
           +'<span class="qty-num" style="color:'+(qty>0?'var(--accent)':'var(--txm)')+'">'+qty+'</span>'
-          +'<button class="qty-btn" onclick="cambiarQty('+JSON.stringify(k)+','+JSON.stringify(idioma)+',1)" '+(qty>=stk?'disabled':'')+'>+</button>'
+          +'<button class="qty-btn" onclick="cambiarQty(\''+k+'\',\''+idioma+'\',1)" '+(qty>=stk?'disabled':'')+'>+</button>'
           +'</div>'
         :'')
       +'</div>';
@@ -784,9 +566,9 @@ function renderTable(rows,cont){
     var cartCell='';
     if(stk>0&&prc>0){
       cartCell='<div class="qty-wrap">'
-        +'<button class="qty-btn" onclick="cambiarQty('+JSON.stringify(k)+','+JSON.stringify(idioma)+','+(qty>0?-1:0)+')" '+(qty===0?'disabled':'')+'>−</button>'
+        +'<button class="qty-btn" onclick="cambiarQty(\''+k+'\',\''+idioma+'\','+(qty>0?-1:0)+')" '+(qty===0?'disabled':'')+'>−</button>'
         +'<span class="qty-num">'+qty+'</span>'
-        +'<button class="qty-btn" onclick="cambiarQty('+JSON.stringify(k)+','+JSON.stringify(idioma)+',1)" '+(qty>=stk?'disabled':'')+'>+</button></div>';
+        +'<button class="qty-btn" onclick="cambiarQty(\''+k+'\',\''+idioma+'\',1)" '+(qty>=stk?'disabled':'')+'>+</button></div>';
     }
     h+='<tr'+(agotado?' class="agotado-row"':'')+' id="tr-'+CSS.escape(k)+'">'
       +'<td>'+imgHtml+'</td>'
@@ -850,9 +632,9 @@ function buildRowHtml(it){
   var cartCell='';
   if(stk>0&&prc>0){
     cartCell='<div class="qty-wrap">'
-      +'<button class="qty-btn" onclick="cambiarQty('+JSON.stringify(k)+','+JSON.stringify(idioma)+','+(qty>0?-1:0)+')" '+(qty===0?'disabled':'')+'>−</button>'
+      +'<button class="qty-btn" onclick="cambiarQty(\''+k+'\',\''+idioma+'\','+(qty>0?-1:0)+')" '+(qty===0?'disabled':'')+'>−</button>'
       +'<span class="qty-num">'+qty+'</span>'
-      +'<button class="qty-btn" onclick="cambiarQty('+JSON.stringify(k)+','+JSON.stringify(idioma)+',1)" '+(qty>=stk?'disabled':'')+'>+</button></div>';
+      +'<button class="qty-btn" onclick="cambiarQty(\''+k+'\',\''+idioma+'\',1)" '+(qty>=stk?'disabled':'')+'>+</button></div>';
   }
   return '<td>'+imgHtml+'</td>'
     +'<td><strong>'+it.nombre+'</strong></td>'
@@ -1011,7 +793,7 @@ function renderVistaFormulario(){
     +'<button class="addr-tab" id="ck-tabSucursal" onclick="setDireccionHT(\'sucursal\')">Sucursal Starken</button></div>'
     +'<div class="sec-domicilio show" id="ck-secDomicilio">'
     +'<div class="field"><label>Calle <span class="req">*</span></label><input type="text" id="ck-direccion" placeholder="Ej: Av. Nueva Providencia"><div class="field-error" id="err-ck-direccion">Ingresa la calle.</div></div>'
-    +'<div class="row2"><div class="field"><label>Número <span class="req">*</span></label><input type="text" id="ck-dirNumero" placeholder="Ej: 1234"><div class="field-error" id="err-ck-dirNumero"><div class="field-error" id="err-ck-dirNumero">Ingresa el número.</div></div>'
+    +'<div class="row2"><div class="field"><label>Número <span class="req">*</span></label><input type="text" id="ck-dirNumero" placeholder="Ej: 1234"><div class="field-error" id="err-ck-dirNumero">Ingresa el número.</div></div>'
     +'<div class="field"><label>Dpto / Casa</label><input type="text" id="ck-dirDepto" placeholder="Ej: Depto 502"></div></div>'
     +'<div class="row2"><div class="field"><label>Comuna <span class="req">*</span></label><input type="text" id="ck-ciudad" placeholder="Ej: Providencia"><div class="field-error" id="err-ck-ciudad">Ingresa tu comuna.</div></div>'
     +'<div class="field"><label>Ciudad <span class="req">*</span></label><input type="text" id="ck-dirCiudad" placeholder="Ej: Santiago"><div class="field-error" id="err-ck-dirCiudad">Ingresa tu ciudad.</div></div></div></div>'
@@ -1076,8 +858,9 @@ async function enviarPedidoHT(){
   var orderItems=CARRITO.map(function(c){return {nombre:c.nombre,set:c.set,set_nombre:c.set_nombre,numero:c.numero,rareza:c.rareza,idioma:c.idioma,cantidad:c.qty,precio_clp:c.precio,subtotal:c.precio*c.qty};});
   var orderData={carpeta:'HT',cliente:ckVal('ck-nombre'),instagram:'@'+ckVal('ck-usuario').replace('@',''),correo:ckVal('ck-correo'),entrega:entregaMode,dia:entregaMode==='retiro'?ckVal('ck-retiroDia'):null,hora:entregaMode==='retiro'?ckVal('ck-retiroHora'):null,rut:entregaMode==='envio'?ckVal('ck-rut'):null,celular:entregaMode==='envio'?'+569'+ckVal('ck-celular'):null,correo_envio:entregaMode==='envio'?ckVal('ck-correoEnvio'):null,direccion:entregaMode==='envio'?dirStr:null,items:orderItems};
   try{
-    await fetch(GAS_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(orderData)});
-    CHECKOUT_VIEW='success';window.LAST_ORDER_ID='HT-0001';
+    var resp=await fetch(GAS_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(orderData)});
+    var rj=await resp.json();
+    CHECKOUT_VIEW='success';window.LAST_ORDER_ID=(rj&&rj.id)?rj.id:'HITS-????';
     CARRITO=[];actualizarCarritoBtn();renderCarritoPanel();renderAll();
   }catch(e){alert('Error de conexión. Intenta de nuevo.');btn.disabled=false;btn.textContent='Enviar pedido';}
 }

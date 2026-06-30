@@ -299,7 +299,7 @@ function nombreArchivoImg(item){
   if(!item.img_id) return null;
   var corr=String(item.img_id).padStart(4,'0');
   var nom=limpiarCamel(item.nombre);
-  var set=limpiarCamel(item.set_nombre||item.set);
+  var set=limpiarCamel(item.set);
   var num=limpiarNumeroImg(item.numero);
   var base=corr+'_'+nom+'_'+set+'_'+num;
   if(item.img_multi) base+='_'+safeRarezaImg(item.rareza);

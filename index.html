@@ -25,10 +25,10 @@ header p{font-size:.75rem;color:var(--txm);margin-top:1px}
 .sync-bar{font-size:.72rem;color:var(--txm);padding:5px 20px;text-align:right;background:var(--surf);border-bottom:1px solid var(--brd);display:none}
 .sync-bar.show{display:block}
 /* Paste banner */
-.paste-banner{display:flex;align-items:center;gap:8px;width:100%;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;text-align:left;background:var(--gold);color:#1a1306;padding:11px 20px;font-size:.84rem;font-weight:800;transition:background .15s}
-.paste-banner:hover{background:#f0d670}
-.paste-banner svg{width:17px;height:17px;flex-shrink:0}
-@media(max-width:480px){.paste-banner{padding:8px 14px;font-size:.74rem}}
+.paste-banner{display:flex;align-items:center;justify-content:center;gap:10px;width:calc(100% - 28px);margin:12px 14px;border:2px dashed var(--accent);border-radius:12px;cursor:pointer;font-family:'DM Sans',sans-serif;text-align:center;background:var(--accent-dim);color:var(--accent);padding:13px 20px;font-size:.86rem;font-weight:800;letter-spacing:.02em;transition:background .15s,box-shadow .15s}
+.paste-banner:hover{background:rgba(232,255,71,.2);box-shadow:0 0 16px rgba(232,255,71,.3)}
+.paste-banner svg{width:18px;height:18px;flex-shrink:0}
+@media(max-width:480px){.paste-banner{padding:10px 14px;font-size:.76rem;width:calc(100% - 20px);margin:10px}}
 .bar-sticky{background:var(--bg);padding:10px 20px 8px;border-bottom:1px solid var(--brd);box-shadow:0 8px 14px -10px rgba(0,0,0,.6)}
 @media(max-width:480px){.bar-sticky{padding:8px 14px 6px}}
 .bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
@@ -68,7 +68,7 @@ header p{font-size:.75rem;color:var(--txm);margin-top:1px}
 .agotado-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(20,10,10,.88);border:1px solid rgba(255,80,80,.5);color:#ff8080;font-family:'Syne',sans-serif;font-size:.78rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:7px 16px;border-radius:20px;z-index:3;pointer-events:none}
 .imgw img{width:100%;height:auto;display:block}
 .ph{color:var(--txm);font-size:.71rem;text-align:center;padding:10px;line-height:1.5}
-.vbdg{position:absolute;top:5px;right:5px;padding:2px 6px;border-radius:8px;font-size:.65rem;font-weight:700;z-index:2;pointer-events:none}
+.vbdg{position:absolute;top:5px;right:5px;padding:2px 6px;border-radius:8px;font-size:.6rem;font-weight:700;z-index:2;pointer-events:none;max-width:70%;text-align:right;line-height:1.1;white-space:normal}
 .rar-nrml{background:#1c1c38;border:1px solid #3a3a60;color:#aaa8d0}
 .rar-holo{background:#1a1230;border:1px solid #6040a0;color:#c0a0ff}
 .rar-revh{background:#3a1505;border:1px solid #7a3a18;color:#ff8c5a}
@@ -325,6 +325,11 @@ function rarClass(r){
   var map={'NRML':'rar-nrml','HOLO':'rar-holo','REV-H':'rar-revh','PKBL':'rar-pkbl','PROMO':'rar-promo','EX':'rar-ex','DR':'rar-dr','UR':'rar-ur','V':'rar-v','VMAX':'rar-vmax','VSTAR':'rar-vstar','ILL':'rar-ill','SIR':'rar-sir','HR/SR':'rar-hrsr','SHR':'rar-shr','SHUR':'rar-shur','RADR':'rar-radr','AMZR':'rar-amzr','BREAK':'rar-break','MSTBL':'rar-mstbl','ACE':'rar-ace','LIGA':'rar-liga'};
   return map[r]||'rar-default';
 }
+// Nombre completo oficial (TCG) para mostrar al usuario en badges y menú.
+function rarLabel(r){
+  var map={'NRML':'Normal','HOLO':'Holo Rare','REV-H':'Reverse Holo','PKBL':'Poke Ball','PROMO':'Promo','EX':'EX','DR':'Double Rare','UR':'Ultra Rare','V':'V','VMAX':'VMAX','VSTAR':'VSTAR','ILL':'Illustration Rare','SIR':'Special Illustration Rare','HR/SR':'Hyper Rare / Secret Rare','SHR':'Shiny Rare','SHUR':'Shiny Ultra Rare','RADR':'Radiant Rare','AMZR':'Amazing Rare','BREAK':'BREAK','MSTBL':'Master Ball','ACE':'ACE SPEC','LIGA':'Liga'};
+  return map[r]||r;
+}
 
 // ── Estado global
 var INVENTARIO=[],GAS_LOADED=false,CARRITO=[],CARD_IDIOMA={};
@@ -392,7 +397,7 @@ function getSetsFiltrados(){
 function buildFiltros(){
   var rarezas=getRarezasFiltradas();
   var sets=getSetsFiltrados();
-  var rOpts='<option value="">Rareza</option>'+rarezas.map(function(r){return '<option'+(RF===r?' selected':'')+'>'+r+'</option>';}).join('');
+  var rOpts='<option value="">Rareza</option>'+rarezas.map(function(r){return '<option value="'+r+'"'+(RF===r?' selected':'')+'>'+rarLabel(r)+'</option>';}).join('');
   var sOpts='<option value="">Set</option>'+sets.map(function(s){return '<option'+(SF===s?' selected':'')+'>'+s+'</option>';}).join('');
   var fb=document.getElementById('filtros-bar');
   fb.innerHTML=
@@ -529,7 +534,7 @@ function buildCardHtml(it){
 
   return '<div class="ci'+(agotado?' agotado':'')+'">'
     +'<div class="imgw">'+imgHtml+agotadoOvr+'</div>'
-    +'<span class="vbdg '+rarClass(it.rareza)+'">'+it.rareza+'</span>'
+    +'<span class="vbdg '+rarClass(it.rareza)+'" title="'+rarLabel(it.rareza)+'">'+rarLabel(it.rareza)+'</span>'
     +'<div class="info"><div class="pn">'+it.nombre+'</div>'
     +'<div class="sn">'+(it.set_nombre||it.set||'—')+'</div>'
     +'<div class="cn">'+(it.set||'—')+' · '+(it.numero||'—')+'</div>'
@@ -574,7 +579,7 @@ function renderTable(rows,cont){
       +'<td>'+imgHtml+'</td>'
       +'<td><strong>'+it.nombre+'</strong></td>'
       +'<td style="font-size:.78rem;color:var(--txm)">'+(it.set_nombre||it.set||'—')+'</td>'
-      +'<td><span class="vbdg '+rarClass(it.rareza)+'" style="position:static;display:inline-block">'+it.rareza+'</span></td>'
+      +'<td><span class="vbdg '+rarClass(it.rareza)+'" style="position:static;display:inline-block">'+rarLabel(it.rareza)+'</span></td>'
       +'<td>'+langBtns+'</td>'
       +'<td>'+(prc>0?clp(prc):'—')+'</td>'
       +'<td>'+stk+'</td>'
@@ -639,7 +644,7 @@ function buildRowHtml(it){
   return '<td>'+imgHtml+'</td>'
     +'<td><strong>'+it.nombre+'</strong></td>'
     +'<td style="font-size:.78rem;color:var(--txm)">'+(it.set_nombre||it.set||'—')+'</td>'
-    +'<td><span class="vbdg '+rarClass(it.rareza)+'" style="position:static;display:inline-block">'+it.rareza+'</span></td>'
+    +'<td><span class="vbdg '+rarClass(it.rareza)+'" style="position:static;display:inline-block">'+rarLabel(it.rareza)+'</span></td>'
     +'<td>'+langBtns+'</td>'
     +'<td>'+(prc>0?clp(prc):'—')+'</td>'
     +'<td>'+stk+'</td>'
@@ -717,7 +722,7 @@ function renderVistaCarrito(){
     if(c.img) h+='<img src="'+c.img+'" alt="'+c.nombre+'">';
     h+='<div class="cart-item-info">'
       +'<div class="cart-item-name">'+c.nombre+'</div>'
-      +'<div class="cart-item-meta">'+c.rareza+' · '+labelIdioma(c.idioma)+' · '+(c.set_nombre||c.set||'—')+' #'+c.numero+'</div>'
+      +'<div class="cart-item-meta">'+rarLabel(c.rareza)+' · '+labelIdioma(c.idioma)+' · '+(c.set_nombre||c.set||'—')+' #'+c.numero+'</div>'
       +'<div style="font-size:.72rem;color:var(--txm);margin-top:2px">'+clp(c.precio)+' × '+c.qty+'</div></div>'
       +'<div style="text-align:right;flex-shrink:0"><div class="cart-item-price">'+clp(sub)+'</div>'
       +'<div class="qty-wrap" style="margin-top:4px;justify-content:flex-end">'

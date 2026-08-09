@@ -411,20 +411,10 @@ function safeRarezaImg(r){
   return String(r||'').replace(/\//g,'-').replace(/\s+/g,'');
 }
 function nombreArchivoImg(r){
-  if(CARPETA==='HT'){
-    var imgId=r[8]||r[5];
-    if(!imgId) return null;
-    var corr=String(imgId).padStart(4,'0');
-    var nom=limpiarCamel(r[1]);
-    var set=limpiarCamel(r[2]);
-    var num=limpiarNumeroImg(r[3]);
-    var base=corr+'_'+nom+'_'+set+'_'+num;
-    if(r[9]) base+='_'+safeRarezaImg(r[4]);
-    return base+'.jpg';
-  }
-  var b=String((r[8]||r[5])||'unknown').trim().replace(/[^a-zA-Z0-9\-]/g,'_');
-  if(r[9]) b+='_'+rarPK(r[4]);
-  return b+'.jpg';
+  var imgId=r[8]||r[5];
+  if(!imgId) return null;
+  if(r[9]) return imgId+'_'+safeRarezaImg(r[4])+'.jpg';
+  return imgId+'.jpg';
 }
 
 function esBrillo(rareza){
@@ -556,7 +546,7 @@ async function syncGAS(){
       var numero=String(it.numero||'').trim();
       var rareza=String(it.rareza||'').trim();
       var setNombre=String(it.set_nombre||'').trim()||codSet;
-      var codInt=String(it.img_id||'').trim();
+      var codInt=String(it.cod_int||'').trim();
       var multi=!!it.img_multi;
 
       CARDS.push([uid,nombre,codSet,numero,rareza,codInt,setNombre,'',codInt,multi,String(it.categoria||'').trim()]);
